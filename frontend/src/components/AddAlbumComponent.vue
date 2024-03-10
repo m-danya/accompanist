@@ -1,9 +1,11 @@
 <template>
-  <div>
-    <h1>Добавить альбом</h1>
-    <input v-model="artist" placeholder="Исполнитель">
-    <input v-model="songTitle" placeholder="Название альбома">
-    <button @click="addSong">Добавить</button>
+  <div class="container">
+    <div class="form-container">
+      <h1>Добавить альбом</h1>
+      <input v-model="artist" placeholder="Исполнитель">
+      <input v-model="songTitle" placeholder="Название альбома">
+      <button @click="addSong">Добавить</button>
+    </div>
   </div>
 </template>
 
@@ -35,11 +37,22 @@ export default {
 </script>
 
 <style scoped>
-div {
+.container {
+  max-width: 1200px;
+  /* Максимальная ширина контейнера */
+  margin: 0 auto;
+  /* Центрирование контейнера */
+  padding: 20px;
+  /* Отступы внутри контейнера */
+}
+
+.form-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
+  /* align-items: center; */
+  text-align: left;
+  /* padding: 20px; */
+  width: 300px;
 }
 
 input {
@@ -47,11 +60,11 @@ input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 250px;
 }
 
 button {
   margin-top: 10px;
+  width: 100%;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
