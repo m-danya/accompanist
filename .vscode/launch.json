@@ -1,0 +1,31 @@
+{
+    // shared vscode launching config (for the convenience of developers)
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Serve frontend",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "serve",
+                "--host",
+                "0.0.0.0"
+            ],
+            "cwd": "${workspaceFolder}/frontend",
+            "console": "integratedTerminal",
+        },
+        {
+            "name": "uvicorn",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "accompanist.main:app",
+                "--reload"
+            ],
+            "jinja": true
+        }
+    ]
+}

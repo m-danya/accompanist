@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  db:
+    image: postgres:latest
+    ports:
+    - ${DB_PORT}:5432
+    environment:
+        - POSTGRES_DB=${DB_NAME}
+        - POSTGRES_PASSWORD=${DB_PASS}
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
+    volumes:
+        - postgres-volume:/var/lib/postgresql/data
+volumes:
+  postgres-volume:

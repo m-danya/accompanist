@@ -34,6 +34,41 @@ export default {
           title: 'Tragic City',
           artist: 'ЛСП',
           coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
+        }, {
+          id: 3,
+          title: 'Tragic City',
+          artist: 'ЛСП',
+          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
+        }, {
+          id: 3,
+          title: 'Tragic City',
+          artist: 'ЛСП',
+          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
+        }, {
+          id: 3,
+          title: 'Tragic City',
+          artist: 'ЛСП',
+          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
+        }, {
+          id: 3,
+          title: 'Tragic City',
+          artist: 'ЛСП',
+          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
+        }, {
+          id: 3,
+          title: 'Tragic City',
+          artist: 'ЛСП',
+          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
+        }, {
+          id: 3,
+          title: 'Tragic City',
+          artist: 'ЛСП',
+          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
+        }, {
+          id: 3,
+          title: 'Tragic City',
+          artist: 'ЛСП',
+          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
         },
       ]
     }

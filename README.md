@@ -16,6 +16,13 @@
 This project uses `ruff` for formatting and linting. For VS Code, just install
 the "Ruff" extension and reload the editor.
 
+### General
+
+```
+cp .env.sample .env
+docker-compose up -d --build
+```
+
 ### Frontend
 
 ```
@@ -29,6 +36,13 @@ npm run serve
 
 ### TODOs
 
+#### Necessary todos
+
+- Put FastAPI service in Docker container, run alembic migrations in Dockefile
+
+#### Features
+
 - Publish docker image(s) to Docker Hub
 - Frontend localization
 - Add Telegram bot wrapper for the backend
+- Add mypy (+ CI)
