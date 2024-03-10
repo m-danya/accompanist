@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "accompanist"
+version = "0.1.0"
+description = "A self-hosted karaoke system with AI"
+authors = ["m-danya <danila-mikh@ya.ru>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = {extras = ["all"], version = "^0.110.0"}
+sqlalchemy = "^2.0.28"
+alembic = "^1.13.1"
+asyncpg = "^0.29.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
