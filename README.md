@@ -1,4 +1,9 @@
-# Accompanist — A self-hosted karaoke system with AI
+## Accompanist — a self-hosted karaoke system with AI
+
+<div style="text-align: center;">
+    <img width="200px" src="./imgs/logo.png">
+</div>
+
 
 (not yet released)
 
