@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 
+from accompanist.collection.router import router as collection_router
+
 app = FastAPI(
     title="Accompanist",
 )
 
-
-@app.get("/hello_world")
-def hello_world():
-    return "yay"
+app.include_router(collection_router)

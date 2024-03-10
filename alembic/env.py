@@ -7,14 +7,13 @@ from alembic import context
 from accompanist.config import settings
 
 from accompanist.database import Base
-from accompanist.songs.models import *  # noqa
+from accompanist.collection.models import *  # noqa
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
 config.set_main_option("sqlalchemy.url", f"{settings.DATABASE_URL}?async_fallback=True")
-config.set_main_option("file_template", "%%(year)d-%%(month).2d-%%(day).2d_%%(slug)s")
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
