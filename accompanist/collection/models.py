@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Date, ForeignKey
+from sqlalchemy import DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from accompanist.database import Base
@@ -11,7 +11,7 @@ class Artist(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
-    added_at: Mapped[datetime] = mapped_column(Date)
+    added_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     albums: Mapped[list["Album"]] = relationship(back_populates="artist")
     songs: Mapped[list["Song"]] = relationship(back_populates="artist")
@@ -27,7 +27,7 @@ class Song(Base):
     name: Mapped[str]
     artist_id: Mapped[int] = mapped_column(ForeignKey("artist.id"))
     album_id: Mapped[int] = mapped_column(ForeignKey("album.id"))
-    added_at: Mapped[datetime] = mapped_column(Date)
+    added_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     album: Mapped["Album"] = relationship(back_populates="songs")
     artist: Mapped["Artist"] = relationship(back_populates="songs")
@@ -43,7 +43,8 @@ class Album(Base):
     name: Mapped[str]
     artist_id: Mapped[int] = mapped_column(ForeignKey("artist.id"))
     cover_path: Mapped[str]
-    added_at: Mapped[datetime] = mapped_column(Date)
+    added_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    source_url: Mapped[str]
 
     artist: Mapped["Artist"] = relationship(back_populates="albums")
     songs: Mapped[list["Song"]] = relationship(back_populates="album")

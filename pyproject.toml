@@ -12,6 +12,7 @@ fastapi = {extras = ["all"], version = "^0.110.0"}
 sqlalchemy = "^2.0.28"
 alembic = "^1.13.1"
 asyncpg = "^0.29.0"
+loguru = "^0.7.2"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.3.2"

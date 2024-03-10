@@ -39,8 +39,9 @@ npm run serve
 #### Necessary todos
 
 - Put FastAPI service in Docker container, run alembic migrations in Dockefile
+- Print traceback of errors
 
-#### Features
+#### Possible todos
 
 - Publish docker image(s) to Docker Hub
 - Frontend localization
