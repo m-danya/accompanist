@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     DB_NAME: str
     DB_PASS: str
 
+    RABBITMQ_HOST: str
+    RABBITMQ_PORT: str
+
     @property
     def DATABASE_URL(self):
         return (

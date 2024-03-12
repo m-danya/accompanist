@@ -13,6 +13,16 @@ services:
       --workers ${NUM_WORKERS}
       --worker-class uvicorn.workers.UvicornWorker
       --bind=0.0.0.0:${BACKEND_PORT}
+    celery-worker:
+      network_mode: host # FIXME?
+      build: .
+      env_file:
+        - ".env"
+      depends_on:
+        - db
+        - rabbitmq
+      command:
+        celery -A accompanist.celery.main.app worker --loglevel info -E
   frontend:
     ports:
       - ${FRONTEND_PORT}:80

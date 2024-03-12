@@ -22,8 +22,21 @@
             "args": [
                 "accompanist.main:app",
                 "--reload"
+            ]
+        },
+        {
+            "name": "celery worker",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "celery",
+            "args": [
+                "-A",
+                "accompanist.celery.main.app",
+                "worker",
+                "--loglevel",
+                "info",
+                "-E"
             ],
-            "jinja": true
         }
     ]
 }
