@@ -38,7 +38,6 @@ npm run serve
 
 #### Necessary todos
 
-- Put FastAPI service in Docker container, run alembic migrations in Dockefile
 - Print traceback of errors
 
 #### Possible todos

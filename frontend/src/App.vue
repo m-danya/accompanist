@@ -5,23 +5,21 @@
   </div>
 </template>
 
-<script>
+
+<script setup>
 import AddAlbumComponent from './components/AddAlbumComponent.vue';
 import AlbumListComponent from './components/AlbumListComponent.vue';
 
-export default {
-  name: 'App',
-  components: {
-    AddAlbumComponent,
-    AlbumListComponent
-  }
-}
+
+const _backendHost = process.env.VUE_APP_BACKEND_HOST || 'localhost';
+const _backendPort = process.env.VUE_APP_BACKEND_PORT || 8000;
+const backendAddress = `http://${_backendHost}:${_backendPort}`
 </script>
+
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-/* Устанавливаем шрифт Roboto для всего приложения */
 body {
   font-family: 'Roboto', sans-serif;
 }
@@ -35,4 +33,4 @@ h6 {
   font-family: 'Roboto', sans-serif;
 
 }
-</style>./components/AddAlbumComponent.vue
+</style>
