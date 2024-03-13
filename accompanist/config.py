@@ -1,3 +1,4 @@
+from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -11,6 +12,10 @@ class Settings(BaseSettings):
     RABBITMQ_HOST: str
     RABBITMQ_PORT: str
 
+    YOUTUBE_LANGUAGE: str = "ru"
+
+    STORAGE_PATH: Path
+
     @property
     def DATABASE_URL(self):
         return (
@@ -23,3 +28,5 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+settings.STORAGE_PATH.mkdir(exist_ok=True)

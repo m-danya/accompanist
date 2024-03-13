@@ -16,6 +16,8 @@ RUN --mount=type=cache,target=$POETRY_CACHE_DIR poetry install --without dev --n
 
 FROM python:3.10-slim-buster as runtime
 
+RUN apt -y update && apt-get install -y ffmpeg
+
 WORKDIR /app
 
 ENV VIRTUAL_ENV=/app/.venv \

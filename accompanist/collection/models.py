@@ -1,9 +1,11 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey
+from sqlalchemy import JSON, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from accompanist.database import Base
+
+# TODO: add unique constraints for songs and albums
 
 
 class Artist(Base):
@@ -14,26 +16,46 @@ class Artist(Base):
     added_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     albums: Mapped[list["Album"]] = relationship(back_populates="artist")
-    songs: Mapped[list["Song"]] = relationship(back_populates="artist")
+    tracks: Mapped[list["Track"]] = relationship(back_populates="artist")
 
-    def __str__(self):
+    def __repr__(self):
         return f'Artist "{self.name}"'
 
+    def to_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        }
 
-class Song(Base):
-    __tablename__ = "song"
+
+class Track(Base):
+    __tablename__ = "track"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
     artist_id: Mapped[int] = mapped_column(ForeignKey("artist.id"))
     album_id: Mapped[int] = mapped_column(ForeignKey("album.id"))
     added_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    filename_vocals: Mapped[str]
+    filename_instrumental: Mapped[str]
+    number_in_album: Mapped[int]
+    duration: Mapped[str]
 
-    album: Mapped["Album"] = relationship(back_populates="songs")
-    artist: Mapped["Artist"] = relationship(back_populates="songs")
+    album: Mapped["Album"] = relationship(back_populates="tracks")
+    artist: Mapped["Artist"] = relationship(back_populates="tracks")
 
-    def __str__(self):
-        return f'Song "{self.name}" by "{self.artist.name}"'
+    def __repr__(self):
+        return f'track "{self.name}" by "{self.artist.name}"'
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "filename_vocals": self.filename_vocals,
+            "filename_instrumental": self.filename_instrumental,
+            "number_in_album": self.number_in_album,
+            "duration": self.duration,
+        }
 
 
 class Album(Base):
@@ -44,10 +66,22 @@ class Album(Base):
     artist_id: Mapped[int] = mapped_column(ForeignKey("artist.id"))
     cover_path: Mapped[str]
     added_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    source_url: Mapped[str]
+    source_info: Mapped[dict] = mapped_column(JSON)
 
     artist: Mapped["Artist"] = relationship(back_populates="albums")
-    songs: Mapped[list["Song"]] = relationship(back_populates="album")
+    tracks: Mapped[list["Track"]] = relationship(back_populates="album")
 
-    def __str__(self):
+    def __repr__(self):
         return f'Album "{self.name}" by "{self.artist.name}"'
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "artist": self.artist.to_json(),
+            "cover_path": self.cover_path,
+            "tracks": sorted(
+                (track.to_json() for track in self.tracks),
+                key=lambda track: track["number_in_album"],
+            ),
+        }

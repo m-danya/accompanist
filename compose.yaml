@@ -1,5 +1,6 @@
 version: '3.3'
 services:
+
   backend:
     network_mode: host # FIXME?
     build: .
@@ -13,16 +14,34 @@ services:
       --workers ${NUM_WORKERS}
       --worker-class uvicorn.workers.UvicornWorker
       --bind=0.0.0.0:${BACKEND_PORT}
-    celery-worker:
-      network_mode: host # FIXME?
-      build: .
-      env_file:
-        - ".env"
-      depends_on:
-        - db
-        - rabbitmq
-      command:
-        celery -A accompanist.celery.main.app worker --loglevel info -E
+    volumes:
+    - ./storage-volume:/storage
+    environment:
+    - STORAGE_PATH=/storage
+
+  celery-worker:
+    network_mode: host # FIXME?
+    build: .
+    env_file:
+      - ".env"
+    depends_on:
+      - db
+      - rabbitmq
+    command:
+      celery -A accompanist.celery.main.app worker --loglevel info -E
+    volumes:
+      - ./storage-volume:/storage
+    environment:
+      - STORAGE_PATH=/storage
+    deploy: # GPU is used only by celery worker
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
+
+
   frontend:
     ports:
       - ${FRONTEND_PORT}:80
@@ -52,3 +71,4 @@ services:
       - ${RABBITMQ_PORT}:5672
 volumes:
   postgres-volume:
+  # ./storage-volume is used as a bind mount

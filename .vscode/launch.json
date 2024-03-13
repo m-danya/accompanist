@@ -15,10 +15,13 @@
             "console": "integratedTerminal",
         },
         {
-            "name": "uvicorn",
+            "name": "FastAPI",
             "type": "debugpy",
             "request": "launch",
             "module": "uvicorn",
+            "env": {
+                "STORAGE_PATH": "./storage-volume"
+            },
             "args": [
                 "accompanist.main:app",
                 "--reload"
@@ -29,6 +32,9 @@
             "type": "debugpy",
             "request": "launch",
             "module": "celery",
+            "env": {
+                "STORAGE_PATH": "./storage-volume"
+            },
             "args": [
                 "-A",
                 "accompanist.celery.main.app",

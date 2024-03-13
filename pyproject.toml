@@ -15,6 +15,9 @@ asyncpg = "^0.29.0"
 loguru = "^0.7.2"
 celery = "^5.3.6"
 gunicorn = "^21.2.0"
+ytmusicapi = "*" # updates are very important for this package
+yt-dlp = "*" # updates are very important for this package
+demucs = "^4.0.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.3.2"

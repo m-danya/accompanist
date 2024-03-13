@@ -25,7 +25,7 @@ class BaseDAO:
     @classmethod
     async def add(cls, **data):
         try:
-            query = insert(cls.model).values(**data).returning(cls.model.id)
+            query = insert(cls.model).values(**data).returning(*cls.model.__table__.c)
             async with async_session_maker() as session:
                 result = await session.execute(query)
                 await session.commit()
@@ -36,7 +36,9 @@ class BaseDAO:
             elif isinstance(e, Exception):
                 msg = "Unknown Exc: Cannot insert data into table"
 
-            logger.error(msg, extra={"table": cls.model.__tablename__}, exc_info=True)
+            logger.exception(
+                msg, extra={"table": cls.model.__tablename__}, exc_info=True
+            )
             return None
 
     @classmethod
