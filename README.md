@@ -1,11 +1,12 @@
 ## Accompanist — a self-hosted karaoke system with AI
 
 <div style="text-align: center">
-    <img width="200px" src="./imgs/logo.png">
+    <img src="./imgs/screen_1.png">
 </div>
 
+
 <div style="text-align: center">
-    <img width="500px" src="./imgs/screenshot.png">
+    <img src="./imgs/screen_2.png">
 </div>
 
 
@@ -27,7 +28,7 @@ sudo apt-get install -y nvidia-container-toolkit
 sudo systemctl restart docker
 ```
 
-Running the application:
+How to run the system:
 
 ```
 git clone https://github.com/m-danya/accompanist
@@ -57,14 +58,12 @@ npm run serve
 
 ### TODOs
 
-#### Necessary todos
-
-- Print traceback of errors
-- Run `alembic upgrade head` at launching
-
 #### Possible todos
 
 - [All the "TODO"s in the code]
+- Showing lyrics (as in karaoke): API vs self-labeling
+- Collection management: order of albums / stars / rating
+- Run `alembic upgrade head` at launching
 - Publish docker image(s) to Docker Hub
 - Frontend localization
 - Add Telegram bot wrapper for the backend
