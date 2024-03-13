@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div @click="$emit('goToAlbumChoosing');" class="go-back-button clickable">
+      ← <slot>Назад</slot>
+    </div>
     <div class="form-container">
       <h1>Добавить альбом</h1>
       <input v-model="searchQuery" placeholder="Исполнитель и название">
@@ -9,10 +12,13 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue';
+import { ref, inject, defineEmits } from 'vue';
 
 const backendAddress = inject('backendAddress');
 const searchQuery = ref('');
+
+const emit = defineEmits(['confirmUploadNewAlbum, goToAlbumChoosing']);
+
 
 async function addSong() {
   try {
@@ -31,6 +37,7 @@ async function addSong() {
     const data = await response.json();
     console.log("Запрос на добавление альбома принят: " + JSON.stringify(data));
     searchQuery.value = ""
+    emit('confirmUploadNewAlbum')
   } catch (error) {
     console.error(error);
     alert("Ошибка при добавлении альбома");

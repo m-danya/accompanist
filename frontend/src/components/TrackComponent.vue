@@ -1,19 +1,21 @@
 <template>
     <div class="album-details">
-        <div @click="$emit('goToAlbumChoosing');" class="go-back-button clickable">
+        <div @click="$emit('goToTrackChoosing');" class="go-back-button clickable">
             ← <slot>Назад</slot>
         </div>
-        <h2>{{ album.name }} by {{ album.artist.name }}</h2>
+        <h2>{{ track.name }} by {{ album.artist.name }}</h2>
         <img :src="getStaticUrl(album.cover_path)" alt="Обложка альбома" class="album-cover">
         <div class="songs-list">
-            <ul>
-                <li v-for="track in album.tracks" :key="track.id" @click="$emit('selectTrack', track);">
-                    <div class="song-info">
-                        <div class="song-title clickable">{{ track.name }}</div>
-                        <div class="song-duration">{{ track.duration }}</div>
-                    </div>
-                </li>
-            </ul>
+
+            <audio controls>
+                <source :src="getStaticUrl(track.filename_instrumental)" type="audio/mpeg">
+            </audio>
+            <audio controls>
+                <source :src="getStaticUrl(track.filename_vocals)" type="audio/mpeg">
+            </audio>
+
+            <h2>(тут будет пролистывающийся текст песни)</h2>
+
         </div>
     </div>
 </template>
@@ -25,11 +27,11 @@ import { defineProps, inject, defineEmits } from 'vue';
 const backendAddress = inject('backendAddress')
 
 const props = defineProps({
+    track: Object,
     album: Object
 });
 
-const emit = defineEmits(['selectTrack', 'goToAlbumChoosing']);
-
+const emit = defineEmits(['goToTrackChoosing']);
 
 
 const getStaticUrl = (filename) => {
@@ -44,6 +46,7 @@ const getStaticUrl = (filename) => {
     margin-right: auto;
     margin-bottom: 40px;
     max-width: 300px;
+
 }
 
 .album-details {
@@ -72,7 +75,7 @@ const getStaticUrl = (filename) => {
 
 .songs-list li {
     margin-bottom: 20px;
-    padding: 10px 30px;
+    padding: 10px;
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);

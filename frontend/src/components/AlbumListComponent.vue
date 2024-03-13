@@ -4,9 +4,12 @@
       <h1>Доступные альбомы</h1>
       <div class="albums-grid">
         <div class="album" v-for="album in albums" :key="album.id" @click="emitSelect(album)">
-          <img :src="getImageUrl(album.cover_path)" alt="Обложка альбома" class="album-cover">
-          <div class="album-title">{{ album.name }}</div>
-          <div class="album-artist">{{ album.artist.name }}</div>
+          <img :src="getImageUrl(album.cover_path)" alt="Обложка альбома" class="album-cover clickable">
+          <div class="album-title clickable">{{ album.name }}</div>
+          <div class="album-artist clickable">{{ album.artist.name }}</div>
+        </div>
+        <div class="album-cover new-album" @click="$emit('uploadNewAlbum')">
+          <span class="plus-sign">+</span>
         </div>
       </div>
     </div>
@@ -19,7 +22,7 @@ import { ref, onMounted, inject, defineEmits } from 'vue';
 const backendAddress = inject('backendAddress')
 const albums = inject('albums')
 
-const emit = defineEmits(['selectAlbum']);
+const emit = defineEmits(['selectAlbum', 'uploadNewAlbum']);
 
 function emitSelect(album) {
   emit('selectAlbum', album);
@@ -76,5 +79,36 @@ const getImageUrl = (image_name) => {
   font-size: 14px;
   text-align: left;
   /* Aligns text to the left */
+}
+
+
+.new-album {
+  border: 2px dashed #ccc;
+  /* Dashed border for the new album square */
+  display: flex;
+  /* Use flexbox for centering */
+  justify-content: center;
+  /* Center children horizontally */
+  align-items: center;
+  /* Center children vertically */
+  cursor: pointer;
+}
+
+.plus-sign {
+  color: #888;
+  /* Color of the plus sign */
+  font-size: 48px;
+  /* Adjust this value to make the plus sign larger */
+  font-weight: bold;
+  display: flex;
+  /* Ensures the text itself is flex, helping with centering */
+  justify-content: center;
+  /* Center content horizontally */
+  align-items: center;
+  /* Center content vertically */
+}
+
+h1 {
+  padding-bottom: 40px;
 }
 </style>

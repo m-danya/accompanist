@@ -1,8 +1,14 @@
 <template>
   <div id="app">
-    <AddAlbumComponent />
-    <AlbumComponent :album="selectedAlbum" v-if="selectedAlbum" />
-    <AlbumListComponent @selectAlbum="handleSelectAlbum" />
+    <HeaderComponent @click="handleGoToAlbumChoosing" />
+    <AddAlbumComponent v-if="appState === AppStates.UploadingNewAlbum"
+      @confirmUploadNewAlbum="handleConfirmUploadNewAlbum" @goToAlbumChoosing="handleGoToAlbumChoosing" />
+    <AlbumComponent :album="selectedAlbum" @goToAlbumChoosing="handleGoToAlbumChoosing" @selectTrack="handleSelectTrack"
+      v-if="appState === AppStates.ChoosingTrack" />
+    <AlbumListComponent @selectAlbum="handleSelectAlbum" v-if="appState === AppStates.ChoosingAlbum"
+      @uploadNewAlbum="handleUploadNewAlbum" />
+    <TrackComponent :track="selectedTrack" :album="selectedAlbum" @goToTrackChoosing="handleGoToTrackChoosing"
+      v-if="appState === AppStates.ListeningToTrack" />
   </div>
 </template>
 
@@ -11,6 +17,8 @@
 import AddAlbumComponent from './components/AddAlbumComponent.vue';
 import AlbumComponent from './components/AlbumComponent.vue';
 import AlbumListComponent from './components/AlbumListComponent.vue';
+import TrackComponent from './components/TrackComponent.vue';
+import HeaderComponent from './components/HeaderComponent.vue';
 
 
 import { onMounted, provide, ref } from 'vue';
@@ -21,12 +29,45 @@ const _backendPort = process.env.VUE_APP_BACKEND_PORT || 8000;
 const backendAddress = `http://${_backendHost}:${_backendPort}`
 provide('backendAddress', backendAddress)
 
+const appState = ref(1);
+
 const albums = ref([]);
 const selectedAlbum = ref(null); // album object
+const selectedTrack = ref(null); // track object
+
+const AppStates = {
+  UploadingNewAlbum: 0,
+  ChoosingAlbum: 1,
+  ChoosingTrack: 2,
+  ListeningToTrack: 3,
+}
+
 provide('albums', albums)
 
-function handleSelectAlbum(album_id) {
-  selectedAlbum.value = album_id
+function handleSelectAlbum(album) {
+  selectedAlbum.value = album
+  appState.value = AppStates.ChoosingTrack
+}
+
+function handleSelectTrack(track) {
+  selectedTrack.value = track
+  appState.value = AppStates.ListeningToTrack
+}
+
+function handleGoToAlbumChoosing() {
+  appState.value = AppStates.ChoosingAlbum
+}
+
+function handleGoToTrackChoosing() {
+  appState.value = AppStates.ChoosingTrack
+}
+
+function handleUploadNewAlbum() {
+  appState.value = AppStates.UploadingNewAlbum
+}
+
+function handleConfirmUploadNewAlbum() {
+  appState.value = AppStates.ChoosingAlbum
 }
 
 const fetchAlbums = async () => {
@@ -63,5 +104,9 @@ h5,
 h6 {
   font-family: 'Roboto', sans-serif;
 
+}
+
+.clickable {
+  cursor: pointer;
 }
 </style>

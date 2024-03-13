@@ -28,7 +28,7 @@ services:
       - db
       - rabbitmq
     command:
-      celery -A accompanist.celery.main.app worker --loglevel info -E
+      celery -A accompanist.celery.main.app worker --loglevel info -E --concurrency ${CELERY_CONCURRENCY}
     volumes:
       - ./storage-volume:/storage
     environment:
