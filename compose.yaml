@@ -13,7 +13,7 @@ services:
       gunicorn accompanist.main:app
       --workers ${NUM_WORKERS}
       --worker-class uvicorn.workers.UvicornWorker
-      --bind=0.0.0.0:${BACKEND_PORT}
+      --bind=0.0.0.0:${FASTAPI_PORT}
     volumes:
     - ./storage-volume:/storage
     environment:
@@ -44,12 +44,25 @@ services:
 
   frontend:
     ports:
-      - ${FRONTEND_PORT}:80
+      - ${DOCKER_FRONTEND_PORT}:80
     build: 
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        BACKEND_PORT: ${BACKEND_PORT}
+        NGINX_PORT: ${NGINX_PORT}
+
+  nginx:
+    image: nginx:latest
+    network_mode: host # FIXME?
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.env:/etc/nginx/templates/10-variables.conf.template:ro
+      - ${STORAGE_PATH}:/usr/share/nginx/html/static
+    depends_on:
+      - backend
+    environment:
+      - FASTAPI_PORT=${FASTAPI_PORT}
+
   db:
     image: postgres:16
     ports:
@@ -69,6 +82,7 @@ services:
     restart: always
     ports:
       - ${RABBITMQ_PORT}:5672
+
 volumes:
   postgres-volume:
   # ./storage-volume is used as a bind mount

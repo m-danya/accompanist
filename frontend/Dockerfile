@@ -3,8 +3,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install -g @vue/cli && npm install
 COPY . .
-ARG BACKEND_PORT
-ENV VUE_APP_BACKEND_PORT=$BACKEND_PORT
+ARG NGINX_PORT
+ENV VUE_APP_BACKEND_PORT=$NGINX_PORT
 RUN npm run build
 
 FROM nginx:stable-alpine as production-stage

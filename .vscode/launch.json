@@ -7,6 +7,9 @@
             "request": "launch",
             "name": "Serve frontend",
             "runtimeExecutable": "npm",
+            "env": {
+                "VUE_APP_BACKEND_PORT": "80"
+            },
             "runtimeArgs": [
                 "run",
                 "serve",
