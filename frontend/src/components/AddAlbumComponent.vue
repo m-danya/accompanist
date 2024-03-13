@@ -2,36 +2,38 @@
   <div class="container">
     <div class="form-container">
       <h1>Добавить альбом</h1>
-      <input v-model="artist" placeholder="Исполнитель">
-      <input v-model="songTitle" placeholder="Название альбома">
+      <input v-model="searchQuery" placeholder="Исполнитель и название">
       <button @click="addSong">Добавить</button>
     </div>
   </div>
 </template>
 
-<script>
-import axios from 'axios';
+<script setup>
+import { ref, inject } from 'vue';
 
-export default {
-  data() {
-    return {
-      songTitle: '',
-      artist: ''
+const backendAddress = inject('backendAddress');
+const searchQuery = ref('');
+
+async function addSong() {
+  try {
+    const response = await fetch(`${backendAddress}/collection/album/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        search_query: searchQuery.value,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to add album');
     }
-  },
-  methods: {
-    async addSong() {
-      try {
-        const response = await axios.post('http://localhost:8000/add_album/', {
-          song_title: this.songTitle,
-          artist: this.artist
-        });
-        console.log("Альбом добавлен: " + JSON.stringify(response.data));
-      } catch (error) {
-        console.error(error);
-        alert("Ошибка при добавлении альбома");
-      }
-    }
+    const data = await response.json();
+    console.log("Запрос на добавление альбома принят: " + JSON.stringify(data));
+    searchQuery.value = ""
+  } catch (error) {
+    console.error(error);
+    alert("Ошибка при добавлении альбома");
   }
 }
 </script>
@@ -39,19 +41,14 @@ export default {
 <style scoped>
 .container {
   max-width: 1200px;
-  /* Максимальная ширина контейнера */
   margin: 0 auto;
-  /* Центрирование контейнера */
   padding: 20px;
-  /* Отступы внутри контейнера */
 }
 
 .form-container {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   text-align: left;
-  /* padding: 20px; */
   width: 300px;
 }
 

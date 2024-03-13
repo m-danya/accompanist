@@ -3,78 +3,33 @@
     <div class="album-list">
       <h1>Доступные альбомы</h1>
       <div class="albums-grid">
-        <div class="album" v-for="album in albums" :key="album.id">
-          <img :src="album.coverUrl" alt="Обложка альбома" class="album-cover">
-          <div class="album-title">{{ album.title }}</div>
-          <div class="album-artist">{{ album.artist }}</div>
+        <div class="album" v-for="album in albums" :key="album.id" @click="emitSelect(album)">
+          <img :src="getImageUrl(album.cover_path)" alt="Обложка альбома" class="album-cover">
+          <div class="album-title">{{ album.name }}</div>
+          <div class="album-artist">{{ album.artist.name }}</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      albums: [
-        {
-          id: 1,
-          title: 'Гранатовый альбом',
-          artist: 'Сплин',
-          coverUrl: 'https://lh3.googleusercontent.com/ewysufFgQuuht8YmMBUt6kPHHTQfp1juQfXi80eieUOI_j3HKM7fnJxt-PHRZHTLKp7aWa2TcWAgaFgY=w544-h544-l90-rj'
-        },
-        {
-          id: 2,
-          title: '7',
-          artist: 'Нервы',
-          coverUrl: 'https://lh3.googleusercontent.com/IXvEtokz0aEMlbUudmxbosHXyindMk41EKBkk_uZiwRquVOXdoz58SWt8yo2ZZaDZua1zSmMAXEoWO2n=w544-h544-l90-rj'
-        }, {
-          id: 3,
-          title: 'Tragic City',
-          artist: 'ЛСП',
-          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
-        }, {
-          id: 3,
-          title: 'Tragic City',
-          artist: 'ЛСП',
-          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
-        }, {
-          id: 3,
-          title: 'Tragic City',
-          artist: 'ЛСП',
-          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
-        }, {
-          id: 3,
-          title: 'Tragic City',
-          artist: 'ЛСП',
-          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
-        }, {
-          id: 3,
-          title: 'Tragic City',
-          artist: 'ЛСП',
-          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
-        }, {
-          id: 3,
-          title: 'Tragic City',
-          artist: 'ЛСП',
-          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
-        }, {
-          id: 3,
-          title: 'Tragic City',
-          artist: 'ЛСП',
-          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
-        }, {
-          id: 3,
-          title: 'Tragic City',
-          artist: 'ЛСП',
-          coverUrl: 'https://lh3.googleusercontent.com/jGzUjV9irr8Lyi_PoU7vWaMV3PJtxZGmhRpf1_KQSYM2TaANhItCyawvYIOlY-BiIbcX5aWbRKwyIQ=w544-h544-l90-rj'
-        },
-      ]
-    }
-  }
+<script setup>
+import { ref, onMounted, inject, defineEmits } from 'vue';
+
+const backendAddress = inject('backendAddress')
+const albums = inject('albums')
+
+const emit = defineEmits(['selectAlbum']);
+
+function emitSelect(album) {
+  emit('selectAlbum', album);
 }
+
+const getImageUrl = (image_name) => {
+  return `${backendAddress}/static/${image_name}`;
+};
 </script>
+
 
 <style scoped>
 .container {
