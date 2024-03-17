@@ -22,7 +22,7 @@ const emit = defineEmits(['confirmUploadNewAlbum, goToAlbumChoosing']);
 
 async function addSong() {
   try {
-    const response = await fetch(`${backendAddress}/collection/album/`, {
+    const response = await fetch(`${backendAddress}/collection/album`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
