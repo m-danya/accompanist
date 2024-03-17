@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 from sqlalchemy.orm import DeclarativeBase
+
 from accompanist.config import settings
 
 engine = create_async_engine(url=settings.DATABASE_URL)

@@ -1,6 +1,7 @@
-from accompanist.celery.main import app
-from accompanist.celery.album import process_album
 from loguru import logger
+
+from accompanist.celery.album import process_album
+from accompanist.celery.main import app
 
 # TODO: ensure only one GPU-requiring task is running at each moment of time
 
