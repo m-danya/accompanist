@@ -4,7 +4,9 @@ COPY package*.json ./
 RUN npm install -g @vue/cli && npm install
 COPY . .
 ARG NGINX_PORT
+ARG DEPLOYMENT_HOST
 ENV VUE_APP_BACKEND_PORT=$NGINX_PORT
+ENV VUE_APP_DEPLOYMENT_HOST=$DEPLOYMENT_HOST
 RUN npm run build
 
 FROM nginx:stable-alpine as production-stage

@@ -24,8 +24,8 @@ import HeaderComponent from './components/HeaderComponent.vue';
 import { onMounted, provide, ref } from 'vue';
 
 
-const _backendHost = process.env.VUE_APP_BACKEND_HOST || 'localhost';
-const _backendPort = process.env.VUE_APP_BACKEND_PORT || 8000;
+const _backendHost = process.env.VUE_APP_DEPLOYMENT_HOST || 'localhost';
+const _backendPort = process.env.VUE_APP_BACKEND_PORT || 80;
 const backendAddress = `http://${_backendHost}:${_backendPort}`
 provide('backendAddress', backendAddress)
 

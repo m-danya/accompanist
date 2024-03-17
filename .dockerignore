@@ -1,3 +1,6 @@
 **/.git
 venv
 **/node_modules
+compose.yaml
+Dockerfile
+storage-volume

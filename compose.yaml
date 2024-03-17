@@ -2,10 +2,9 @@ version: '3.3'
 services:
 
   backend:
-    network_mode: host # FIXME?
+    network_mode: host
     build: .
-    env_file:
-      - ".env"
+    env_file: .env
     depends_on:
       - db
       - rabbitmq
@@ -13,17 +12,16 @@ services:
       gunicorn accompanist.main:app
       --workers ${NUM_WORKERS}
       --worker-class uvicorn.workers.UvicornWorker
-      --bind=0.0.0.0:${FASTAPI_PORT}
+      --bind=127.0.0.1:${FASTAPI_PORT}
     volumes:
     - ./storage-volume:/storage
     environment:
     - STORAGE_PATH=/storage
 
   celery-worker:
-    network_mode: host # FIXME?
+    network_mode: host
     build: .
-    env_file:
-      - ".env"
+    env_file: .env
     depends_on:
       - db
       - rabbitmq
@@ -44,25 +42,24 @@ services:
 
   frontend:
     ports:
-      - ${DOCKER_FRONTEND_PORT}:80
+      - ${DEPLOYMENT_HOST}:${DOCKER_FRONTEND_PORT}:80
     build: 
       context: ./frontend
       dockerfile: Dockerfile
       args:
         NGINX_PORT: ${NGINX_PORT}
+        DEPLOYMENT_HOST: ${DEPLOYMENT_HOST}
 
-  nginx:
+  nginx: # for serving lots of static files & redirecting to FastAPI
     image: nginx:latest
-    network_mode: host # FIXME?
+    network_mode: host
+    env_file: .env
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx.env:/etc/nginx/templates/10-variables.conf.template:ro
       - ${STORAGE_PATH}:/usr/share/nginx/html/static
-    depends_on:
-      - backend
-    environment:
-      - FASTAPI_PORT=${FASTAPI_PORT}
-
+    
   db:
     image: postgres:16
     ports:

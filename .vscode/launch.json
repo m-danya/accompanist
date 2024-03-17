@@ -5,10 +5,13 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Serve frontend",
+            "name": "Vue.js",
             "runtimeExecutable": "npm",
             "env": {
-                "VUE_APP_BACKEND_PORT": "80"
+                // Note: these two definitions duplicate the defaults in
+                // `App.vue`
+                "VUE_APP_BACKEND_PORT": "80",
+                "VUE_APP_DEPLOYMENT_HOST": "localhost",
             },
             "runtimeArgs": [
                 "run",
@@ -22,22 +25,16 @@
             "type": "debugpy",
             "request": "launch",
             "module": "uvicorn",
-            "env": {
-                "STORAGE_PATH": "./storage-volume"
-            },
             "args": [
                 "accompanist.main:app",
                 "--reload"
             ]
         },
         {
-            "name": "celery worker",
+            "name": "Celery worker",
             "type": "debugpy",
             "request": "launch",
             "module": "celery",
-            "env": {
-                "STORAGE_PATH": "./storage-volume"
-            },
             "args": [
                 "-A",
                 "accompanist.celery.main.app",
