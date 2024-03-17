@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from sqlalchemy import JSON, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -40,6 +41,7 @@ class Track(Base):
     filename_instrumental: Mapped[str]
     number_in_album: Mapped[int]
     duration: Mapped[str]
+    lyrics: Mapped[Optional[str]]
 
     album: Mapped["Album"] = relationship(back_populates="tracks")
     artist: Mapped["Artist"] = relationship(back_populates="tracks")
@@ -55,6 +57,7 @@ class Track(Base):
             "filename_instrumental": self.filename_instrumental,
             "number_in_album": self.number_in_album,
             "duration": self.duration,
+            "lyrics": self.lyrics,
         }
 
 

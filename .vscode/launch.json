@@ -7,12 +7,6 @@
             "request": "launch",
             "name": "Vue.js",
             "runtimeExecutable": "npm",
-            "env": {
-                // Note: these two definitions duplicate the defaults in
-                // `App.vue`
-                "VUE_APP_BACKEND_PORT": "80",
-                "VUE_APP_DEPLOYMENT_HOST": "localhost",
-            },
             "runtimeArgs": [
                 "run",
                 "serve",

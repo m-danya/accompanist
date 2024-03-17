@@ -14,7 +14,10 @@
                 <source :src="getStaticUrl(track.filename_vocals)" type="audio/mpeg">
             </audio>
 
-            <h2>(тут будет пролистывающийся текст песни)</h2>
+            <div class="multiline-text">
+                {{ track.lyrics }}
+            </div>
+
 
         </div>
     </div>
@@ -99,6 +102,11 @@ const getStaticUrl = (filename) => {
     /* This will vertically center align the items if they have different heights */
     justify-content: space-between;
     /* Adjusts the space between the child elements */
+}
+
+.multiline-text {
+    white-space: pre-wrap;
+    font-size: 20px;
 }
 
 audio {

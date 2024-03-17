@@ -1,14 +1,17 @@
 import asyncio
-from pathlib import Path
 import shutil
 import subprocess
 import tempfile
 import urllib.request
-from ytmusicapi import YTMusic
+from pathlib import Path
 from uuid import uuid4
-from accompanist.collection.dao import AlbumDAO, ArtistDAO, TrackDAO
-from accompanist.config import settings
+
 from loguru import logger
+from ytmusicapi import YTMusic
+
+from accompanist.collection.dao import AlbumDAO, ArtistDAO, TrackDAO
+from accompanist.collection.service_genius import get_lyrics_from_genius
+from accompanist.config import settings
 
 
 # TODO: manage/clean files that are not referenced in the database?
@@ -37,7 +40,8 @@ def process_album(search_query: str):
     album_id = search_results[0]["browseId"]
     album_json = ytmusic.get_album(album_id)
 
-    # TODO: somehow get better album cover's resolution than 512x512
+    # TODO: somehow get better album cover's resolution than 512x512, e.g. from
+    #  Genius.com API / python wrapper for this API
     best_thumbnail_url = album_json["thumbnails"][-1]["url"]
     cover_path = get_path_in_storage("jpg")
     urllib.request.urlretrieve(best_thumbnail_url, cover_path)
@@ -64,8 +68,14 @@ def process_album(search_query: str):
 
     for i, track in enumerate(album_json["tracks"], start=1):
         vocals_path, instrumental_path = process_track(track["videoId"])
+        track_name = track["title"]
+        lyrics = None
+        try:
+            lyrics = get_lyrics_from_genius(artist.name, track_name)
+        except Exception:
+            logger.exception(f"Couldn't get lyrics for {track_name}, continuing..")
         coroutine = TrackDAO.add(
-            name=track["title"],
+            name=track_name,
             artist_id=artist.id,
             album_id=album.id,
             filename_vocals=str(vocals_path.relative_to(settings.STORAGE_PATH)),
@@ -74,6 +84,7 @@ def process_album(search_query: str):
             ),
             number_in_album=i,
             duration=track["duration"],
+            lyrics=lyrics,
         )
         track = run_async(coroutine)
         logger.info(f"Added {track}")

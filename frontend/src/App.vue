@@ -25,7 +25,7 @@ import { onMounted, provide, ref } from 'vue';
 
 
 const _backendHost = process.env.VUE_APP_DEPLOYMENT_HOST || 'localhost';
-const _backendPort = process.env.VUE_APP_BACKEND_PORT || 80;
+const _backendPort = process.env.VUE_APP_BACKEND_PORT || 8090;
 const backendAddress = `http://${_backendHost}:${_backendPort}`
 provide('backendAddress', backendAddress)
 

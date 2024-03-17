@@ -35,10 +35,24 @@ How to run the system:
 git clone https://github.com/m-danya/accompanist
 cd accompanist
 cp .env.sample .env
+```
+
+
+Since this project uses Genius API for obtaining lyrics for tracks, you need to
+get token for Genius API. In can be done in 90 seconds:
+
+Go to [https://genius.com/api-clients](https://genius.com/api-clients) and
+obtain *Client Access Token*. You can enter any app name an use any "App Website
+URL". After you get the token, place it into your `.env` file (corresponding
+variable is `GENIUS_CLIENT_ACCESS_TOKEN`).
+
+Let's continue:
+
+```
 mkdir storage-volume
 docker-compose up -d --build
 docker exec -it accompanist-backend-1 alembic upgrade head
-# open http://localhost:8777 in your browser
+# open http://localhost in your browser
 ```
 
 ## Development notes
@@ -102,6 +116,9 @@ the system at `${DEPLOYMENT_HOST}:${DOCKER_FRONTEND_PORT}`.
 - [All the "TODO"s in the code]
 - Showing lyrics (as in karaoke): API vs self-labeling
 - Collection management: order of albums / stars / rating
+- Add "next song" button
+- Add a button for updating text from frontend
+- Add editing text from frontend (to edit Genius parser's mistakes)
 - Run `alembic upgrade head` at launching?
 - Publish docker image(s) to Docker Hub
 - Frontend localization

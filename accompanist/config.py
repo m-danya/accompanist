@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -15,6 +16,8 @@ class Settings(BaseSettings):
     YOUTUBE_LANGUAGE: str = "ru"
 
     STORAGE_PATH: Path
+
+    GENIUS_CLIENT_ACCESS_TOKEN: Optional[str]
 
     @property
     def DATABASE_URL(self):
