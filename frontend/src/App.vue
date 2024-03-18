@@ -4,7 +4,9 @@
       @goToAlbumChoosing="handleGoToAlbumChoosing"
       @refreshAlbums="fetchAlbums"
     />
-    <div class="spinner" v-if="albumsAreLoading"></div>
+    <div v-if="albumsAreLoading" class="spinner-container">
+      <SpinnerComponent />
+    </div>
     <div v-else>
       <AddAlbumComponent
         v-if="appState === AppStates.UploadingNewAlbum"
@@ -27,6 +29,7 @@
         :track="selectedTrack"
         :album="selectedAlbum"
         @goToTrackChoosing="handleGoToTrackChoosing"
+        @goToTrackByNumberInAlbum="handleGoToTrackByNumberInAlbum"
         v-if="appState === AppStates.ListeningToTrack"
       />
     </div>
@@ -39,6 +42,7 @@ import AlbumComponent from "./components/AlbumComponent.vue";
 import AlbumListComponent from "./components/AlbumListComponent.vue";
 import TrackComponent from "./components/TrackComponent.vue";
 import HeaderComponent from "./components/HeaderComponent.vue";
+import SpinnerComponent from "./components/SpinnerComponent.vue";
 
 import { onMounted, provide, ref, computed } from "vue";
 
@@ -49,10 +53,9 @@ const backendAddress = `http://${_backendHost}:${_backendPort}`;
 provide("backendAddress", backendAddress);
 
 const albums = ref([]);
+const albumsAreLoading = ref(true);
 
 const appState = ref(1);
-
-const albumsAreLoading = ref(true);
 
 const selectedAlbumId = ref(null);
 const selectedTrackId = ref(null);
@@ -96,6 +99,13 @@ function handleConfirmUploadNewAlbum() {
   appState.value = AppStates.ChoosingAlbum;
 }
 
+function handleGoToTrackByNumberInAlbum(newNumberInAlbum) {
+  let track = selectedAlbum.value.tracks.find(
+    (track) => track.number_in_album === newNumberInAlbum
+  );
+  selectedTrackId.value = track.id;
+}
+
 const fetchAlbums = async () => {
   albumsAreLoading.value = true;
   try {
@@ -135,17 +145,8 @@ h6 {
   cursor: pointer;
 }
 
-.spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-  margin-top: 300px;
-  border-top: 4px solid #3498db;
-  width: 70px;
-  height: 70px;
-  -webkit-animation: spin 2s linear infinite;
-  /* Safari */
-  animation: spin 2s linear infinite;
-  margin: auto;
+.spinner-container {
+  margin-top: 200px;
 }
 
 /* Safari */

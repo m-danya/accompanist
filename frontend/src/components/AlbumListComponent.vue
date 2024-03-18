@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="album-list">
-      <h1>Доступные альбомы</h1>
+      <h2>Доступные альбомы</h2>
       <div class="albums-grid">
         <div
           class="album"
@@ -114,7 +114,7 @@ const getImageUrl = (image_name) => {
   /* Center content vertically */
 }
 
-h1 {
+h2 {
   padding-bottom: 40px;
 }
 </style>

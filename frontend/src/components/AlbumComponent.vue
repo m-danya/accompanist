@@ -48,12 +48,12 @@ const getStaticUrl = (filename) => {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 40px;
-  max-width: 512px;
+  max-width: 300px;
 }
 
 .album-details {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
