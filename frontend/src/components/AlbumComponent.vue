@@ -7,7 +7,7 @@
         <img :src="getStaticUrl(album.cover_path)" alt="Обложка альбома" class="album-cover">
         <div class="songs-list">
             <ul>
-                <li v-for="track in album.tracks" :key="track.id" @click="$emit('selectTrack', track);">
+                <li v-for="track in album.tracks" :key="track.id" @click="$emit('selectTrack', track.id);">
                     <div class="song-info">
                         <div class="song-title clickable">{{ track.name }}</div>
                         <div class="song-duration">{{ track.duration }}</div>

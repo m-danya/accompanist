@@ -3,7 +3,7 @@
     <div class="album-list">
       <h1>Доступные альбомы</h1>
       <div class="albums-grid">
-        <div class="album" v-for="album in albums" :key="album.id" @click="emitSelect(album)">
+        <div class="album" v-for="album in props.albums" :key="album.id" @click="$emit('selectAlbum', album.id)">
           <img :src="getImageUrl(album.cover_path)" alt="Обложка альбома" class="album-cover clickable">
           <div class="album-title clickable">{{ album.name }}</div>
           <div class="album-artist clickable">{{ album.artist.name }}</div>
@@ -17,16 +17,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject, defineEmits } from 'vue';
+import { ref, onMounted, inject, defineEmits, defineProps } from 'vue';
 
 const backendAddress = inject('backendAddress')
-const albums = inject('albums')
+
+const props = defineProps({
+  albums: Array[Object]
+});
 
 const emit = defineEmits(['selectAlbum', 'uploadNewAlbum']);
 
-function emitSelect(album) {
-  emit('selectAlbum', album);
-}
 
 const getImageUrl = (image_name) => {
   return `${backendAddress}/static/${image_name}`;
