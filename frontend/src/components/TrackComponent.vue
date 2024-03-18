@@ -38,23 +38,61 @@
       <div class="multiline-text">
         {{ track.lyrics }}
       </div>
+      <div class="updateLyricsButtonDiv">
+        <div v-if="updateLyricsButtonIsLoading">
+          <SpinnerComponent size="20px" />
+        </div>
+        <button v-else @click="updateLyrics" class="updateLyricsButton">
+          Обновить текст
+        </button>
+      </div>
     </div>
   </div>
 </template>
 <script setup>
-import { defineEmits, defineProps, inject, computed } from "vue";
+import { defineEmits, defineProps, inject, computed, ref } from "vue";
+import SpinnerComponent from "./SpinnerComponent.vue";
 
 const backendAddress = inject("backendAddress");
+const updateLyricsButtonIsLoading = ref(false);
 const props = defineProps({
   track: Object,
   album: Object,
 });
 
-const emit = defineEmits(["goToTrackChoosing", "goToTrackByNumberInAlbum"]);
+const emit = defineEmits([
+  "goToTrackChoosing",
+  "goToTrackByNumberInAlbum",
+  "refreshAlbums",
+]);
 
 const getStaticUrl = (filename) => {
   return `${backendAddress}/static/${filename}`;
 };
+
+async function updateLyrics() {
+  try {
+    updateLyricsButtonIsLoading.value = true;
+    const response = await fetch(
+      `${backendAddress}/collection/update_lyrics/${props.track.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    emit("refreshAlbums");
+    if (!response.ok) {
+      throw new Error("Failed to update lyrics");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Failed to update lyrics");
+  } finally {
+    updateLyricsButtonIsLoading.value = false;
+  }
+}
 
 const isFirstTrack = computed(() => props.track.number_in_album == 1);
 const isLastTrack = computed(
@@ -135,7 +173,7 @@ audio {
   display: flex;
   justify-content: center;
   gap: 10px; /* Adjust the gap between buttons as needed */
-  margin-top: 20px; /* Adjust spacing as needed */
+  margin: 20px 0; /* Adjust spacing as needed */
 }
 
 .navigation-buttons button {
@@ -147,7 +185,15 @@ audio {
   transition: background-color 0.2s;
 }
 
-.navigation-buttons button:hover {
-  background-color: #e2e6ea;
+.updateLyricsButtonDiv {
+  margin: 20px 0;
+}
+.updateLyricsButton {
+  cursor: pointer;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  transition: background-color 0.2s;
 }
 </style>

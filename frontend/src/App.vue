@@ -5,7 +5,7 @@
       @refreshAlbums="fetchAlbums"
     />
     <div v-if="albumsAreLoading" class="spinner-container">
-      <SpinnerComponent />
+      <SpinnerComponent size="70px" />
     </div>
     <div v-else>
       <AddAlbumComponent
@@ -30,6 +30,7 @@
         :album="selectedAlbum"
         @goToTrackChoosing="handleGoToTrackChoosing"
         @goToTrackByNumberInAlbum="handleGoToTrackByNumberInAlbum"
+        @refreshAlbums="fetchAlbums"
         v-if="appState === AppStates.ListeningToTrack"
       />
     </div>
@@ -73,30 +74,40 @@ const AppStates = {
   ListeningToTrack: 3,
 };
 
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 function handleSelectAlbum(albumId) {
   selectedAlbumId.value = albumId;
   appState.value = AppStates.ChoosingTrack;
+  scrollToTop();
 }
 
 function handleSelectTrack(trackId) {
   selectedTrackId.value = trackId;
   appState.value = AppStates.ListeningToTrack;
+  scrollToTop();
 }
 
 function handleGoToAlbumChoosing() {
   appState.value = AppStates.ChoosingAlbum;
+  scrollToTop();
 }
 
 function handleGoToTrackChoosing() {
   appState.value = AppStates.ChoosingTrack;
+  scrollToTop();
 }
 
 function handleUploadNewAlbum() {
   appState.value = AppStates.UploadingNewAlbum;
+  scrollToTop();
 }
 
 function handleConfirmUploadNewAlbum() {
   appState.value = AppStates.ChoosingAlbum;
+  scrollToTop();
 }
 
 function handleGoToTrackByNumberInAlbum(newNumberInAlbum) {
@@ -104,6 +115,7 @@ function handleGoToTrackByNumberInAlbum(newNumberInAlbum) {
     (track) => track.number_in_album === newNumberInAlbum
   );
   selectedTrackId.value = track.id;
+  scrollToTop();
 }
 
 const fetchAlbums = async () => {

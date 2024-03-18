@@ -119,8 +119,6 @@ the system at `${DEPLOYMENT_HOST}:${DOCKER_FRONTEND_PORT}`.
 - [All the "TODO"s in the code]
 - Showing lyrics (as in karaoke): API vs self-labeling
 - Collection management: order of albums / stars / rating
-- Add "next song" button
-- Add a button for updating text from frontend
 - Add editing text from frontend (to edit Genius parser's mistakes)
 - Run `alembic upgrade head` at launching?
 - Publish docker image(s) to Docker Hub
