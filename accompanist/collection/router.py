@@ -10,10 +10,17 @@ router = APIRouter(
     tags=["User's music collection"],
 )
 
+# TODO: refactor endpoint paths (unify)
+
 
 @router.post("/album", status_code=status.HTTP_202_ACCEPTED)
 async def add_album(album_info: AlbumInfoFromUser):
     await service.add_album(album_info)
+
+
+@router.delete("/album/{album_id}")
+async def delete_album(album_id: int):
+    await AlbumDAO.delete(id=album_id)
 
 
 @router.get("/albums")

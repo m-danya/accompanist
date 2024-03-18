@@ -23,6 +23,9 @@
         </li>
       </ul>
     </div>
+    <button @click="deleteAlbum" class="delete-album-button">
+      Удалить альбом
+    </button>
   </div>
 </template>
 
@@ -35,7 +38,28 @@ const props = defineProps({
   album: Object,
 });
 
-const emit = defineEmits(["selectTrack", "goToAlbumChoosing"]);
+const emit = defineEmits(["selectTrack", "goToAlbumChoosing", "deleteAlbum"]);
+
+const deleteAlbum = async () => {
+  if (window.confirm("Вы уверены, что хотите удалить этот альбом?")) {
+    try {
+      const response = await fetch(
+        `${backendAddress}/collection/album/${props.album.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        emit("deleteAlbum");
+      } else {
+        alert("Произошла ошибка при удалении альбома.");
+      }
+    } catch (error) {
+      console.error("Ошибка при удалении альбома:", error);
+      alert("Произошла ошибка при удалении альбома.");
+    }
+  }
+};
 
 const getStaticUrl = (filename) => {
   return `${backendAddress}/static/${filename}`;
@@ -104,5 +128,22 @@ const getStaticUrl = (filename) => {
 audio {
   width: 100%;
   margin-top: 10px;
+}
+
+.delete-album-button {
+  background-color: #c0392b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.delete-album-button:hover {
+  background-color: darkred;
 }
 </style>

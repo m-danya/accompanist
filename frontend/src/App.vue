@@ -14,10 +14,11 @@
         @goToAlbumChoosing="handleGoToAlbumChoosing"
       />
       <AlbumComponent
+        v-if="appState === AppStates.ChoosingTrack"
         :album="selectedAlbum"
         @goToAlbumChoosing="handleGoToAlbumChoosing"
         @selectTrack="handleSelectTrack"
-        v-if="appState === AppStates.ChoosingTrack"
+        @deleteAlbum="handleDeleteAlbum"
       />
       <AlbumListComponent
         :albums="albums"
@@ -117,6 +118,11 @@ function handleGoToTrackByNumberInAlbum(newNumberInAlbum) {
   selectedTrackId.value = track.id;
   scrollToTop();
 }
+
+const handleDeleteAlbum = async () => {
+  handleGoToAlbumChoosing();
+  await fetchAlbums();
+};
 
 const fetchAlbums = async () => {
   albumsAreLoading.value = true;

@@ -35,7 +35,7 @@ class Track(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
     artist_id: Mapped[int] = mapped_column(ForeignKey("artist.id"))
-    album_id: Mapped[int] = mapped_column(ForeignKey("album.id"))
+    album_id: Mapped[int] = mapped_column(ForeignKey("album.id", ondelete="CASCADE"))
     added_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     filename_vocals: Mapped[str]
     filename_instrumental: Mapped[str]
