@@ -1,43 +1,42 @@
 <template>
   <div class="container">
-    <div @click="$emit('goToAlbumChoosing');" class="go-back-button clickable">
+    <div @click="$emit('goToAlbumChoosing')" class="go-back-button clickable">
       ← <slot>Назад</slot>
     </div>
     <div class="form-container">
       <h1>Добавить альбом</h1>
-      <input v-model="searchQuery" placeholder="Исполнитель и название">
+      <input v-model="searchQuery" placeholder="Исполнитель и название" />
       <button @click="addSong">Добавить</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, inject, defineEmits } from 'vue';
+import { ref, inject, defineEmits } from "vue";
 
-const backendAddress = inject('backendAddress');
-const searchQuery = ref('');
+const backendAddress = inject("backendAddress");
+const searchQuery = ref("");
 
-const emit = defineEmits(['confirmUploadNewAlbum, goToAlbumChoosing']);
-
+const emit = defineEmits(["confirmUploadNewAlbum, goToAlbumChoosing"]);
 
 async function addSong() {
   try {
     const response = await fetch(`${backendAddress}/collection/album`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         search_query: searchQuery.value,
       }),
     });
     if (!response.ok) {
-      throw new Error('Failed to add album');
+      throw new Error("Failed to add album");
     }
     const data = await response.json();
     console.log("Запрос на добавление альбома принят: " + JSON.stringify(data));
-    searchQuery.value = ""
-    emit('confirmUploadNewAlbum')
+    searchQuery.value = "";
+    emit("confirmUploadNewAlbum");
   } catch (error) {
     console.error(error);
     alert("Ошибка при добавлении альбома");

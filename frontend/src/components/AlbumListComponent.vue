@@ -3,8 +3,17 @@
     <div class="album-list">
       <h1>Доступные альбомы</h1>
       <div class="albums-grid">
-        <div class="album" v-for="album in props.albums" :key="album.id" @click="$emit('selectAlbum', album.id)">
-          <img :src="getImageUrl(album.cover_path)" alt="Обложка альбома" class="album-cover clickable">
+        <div
+          class="album"
+          v-for="album in props.albums"
+          :key="album.id"
+          @click="$emit('selectAlbum', album.id)"
+        >
+          <img
+            :src="getImageUrl(album.cover_path)"
+            alt="Обложка альбома"
+            class="album-cover clickable"
+          />
           <div class="album-title clickable">{{ album.name }}</div>
           <div class="album-artist clickable">{{ album.artist.name }}</div>
         </div>
@@ -17,22 +26,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject, defineEmits, defineProps } from 'vue';
+import { ref, onMounted, inject, defineEmits, defineProps } from "vue";
 
-const backendAddress = inject('backendAddress')
+const backendAddress = inject("backendAddress");
 
 const props = defineProps({
-  albums: Array[Object]
+  albums: Array[Object],
 });
 
-const emit = defineEmits(['selectAlbum', 'uploadNewAlbum']);
-
+const emit = defineEmits(["selectAlbum", "uploadNewAlbum"]);
 
 const getImageUrl = (image_name) => {
   return `${backendAddress}/static/${image_name}`;
 };
 </script>
-
 
 <style scoped>
 .container {
@@ -80,7 +87,6 @@ const getImageUrl = (image_name) => {
   text-align: left;
   /* Aligns text to the left */
 }
-
 
 .new-album {
   border: 2px dashed #ccc;

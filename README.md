@@ -60,6 +60,9 @@ docker exec -it accompanist-backend-1 alembic upgrade head
 This project uses `ruff` for formatting and linting. For VS Code, just install
 the "Ruff" extension and reload the editor.
 
+If you're using VS Code, install these extensions for frontend development: "Vue
+- Official" and "Prettier".
+
 The `.vscode/launch.json` file is included in this repo to help developers to
 easily run the frontend and backend locally. To run the system locally, you need
 to follow the instructions both above and below this paragraph.
