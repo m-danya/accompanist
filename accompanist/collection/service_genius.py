@@ -22,10 +22,20 @@ def get_lyrics_from_genius(artist_name: str, song_name: str):
             )
     lyrics = song.lyrics
 
-    # `lyricsgenius` parser gives some extra words at the beginning and at the
-    # end => remove extra words (maybe one day it will be fixed)
+    # `lyricsgenius` parser makes some mistakes => fix them (maybe one day it
+    #  will be fixed)
     first_newline = lyrics.find("\n")
     lyrics = lyrics[first_newline + 1 :]
     if lyrics.endswith("Embed"):
         lyrics = lyrics[: -len("Embed")]
+    lyrics = lyrics.replace("You might also like", "\n")
+
+    # remove digits from "pyong" counter from the end of lyrics
+    n_digits = 0
+    while lyrics[-n_digits - 1].isdecimal():
+        n_digits += 1
+
+    if n_digits:
+        lyrics = lyrics[:-n_digits]
+
     return lyrics
