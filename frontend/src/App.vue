@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <HeaderComponent
-      @goToAlbumChoosing="handleGoToAlbumChoosing"
-      @refreshAlbums="fetchAlbums"
-    />
+    <HeaderComponent @goToAlbumChoosing="handleGoToAlbumChoosing" @refreshAlbums="fetchAlbums" />
     <div v-if="albumsAreLoading" class="spinner-container">
       <SpinnerComponent size="70px" />
     </div>
@@ -46,13 +43,22 @@ import TrackComponent from "./components/TrackComponent.vue";
 import HeaderComponent from "./components/HeaderComponent.vue";
 import SpinnerComponent from "./components/SpinnerComponent.vue";
 
-import { onMounted, provide, ref, computed } from "vue";
+import { onMounted, provide, ref, computed, reactive } from "vue";
 
 const _backendHost = process.env.VUE_APP_DEPLOYMENT_HOST || "localhost";
 const _backendPort = process.env.VUE_APP_BACKEND_PORT || 8090;
 const backendAddress = `http://${_backendHost}:${_backendPort}`;
 
 provide("backendAddress", backendAddress);
+const getStaticUrl = (filename) => {
+  return `${backendAddress}/static/${filename}`;
+};
+const userSettings = reactive({
+  isAutoplayEnabled: false,
+});
+
+provide("getStaticUrl", getStaticUrl);
+provide("userSettings", userSettings);
 
 const albums = ref([]);
 const albumsAreLoading = ref(true);

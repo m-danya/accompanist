@@ -42,6 +42,7 @@ class Track(Base):
     number_in_album: Mapped[int]
     duration: Mapped[str]
     lyrics: Mapped[Optional[str]]
+    lyrics_karaoke: Mapped[Optional[list[dict]]] = mapped_column(JSON)
 
     album: Mapped["Album"] = relationship(back_populates="tracks")
     artist: Mapped["Artist"] = relationship(back_populates="tracks")
@@ -58,6 +59,7 @@ class Track(Base):
             "number_in_album": self.number_in_album,
             "duration": self.duration,
             "lyrics": self.lyrics,
+            "lyrics_karaoke": self.lyrics_karaoke,
         }
 
 

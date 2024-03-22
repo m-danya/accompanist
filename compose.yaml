@@ -3,6 +3,7 @@ services:
 
   backend:
     network_mode: host
+    restart: always
     build: .
     env_file: .env
     depends_on:
@@ -20,6 +21,7 @@ services:
 
   celery-worker:
     network_mode: host
+    restart: always
     build: .
     env_file: .env
     depends_on:
@@ -41,6 +43,7 @@ services:
 
 
   frontend:
+    restart: always
     ports:
       - ${DEPLOYMENT_HOST}:${DOCKER_FRONTEND_PORT}:80
     build: 
@@ -52,6 +55,7 @@ services:
 
   nginx: # for serving lots of static files & redirecting to FastAPI
     image: nginx:latest
+    restart: always
     network_mode: host
     env_file: .env
     build:
@@ -62,6 +66,7 @@ services:
     
   db:
     image: postgres:16
+    restart: always
     ports:
     - ${DB_PORT}:5432
     environment:

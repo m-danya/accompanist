@@ -4,18 +4,10 @@
       ← <slot>Назад</slot>
     </div>
     <h2>{{ album.name }} by {{ album.artist.name }}</h2>
-    <img
-      :src="getStaticUrl(album.cover_path)"
-      alt="Обложка альбома"
-      class="album-cover"
-    />
+    <img :src="getStaticUrl(album.cover_path)" alt="Обложка альбома" class="album-cover" />
     <div class="songs-list">
       <ul>
-        <li
-          v-for="track in album.tracks"
-          :key="track.id"
-          @click="$emit('selectTrack', track.id)"
-        >
+        <li v-for="track in album.tracks" :key="track.id" @click="$emit('selectTrack', track.id)">
           <div class="song-info">
             <div class="song-title clickable">{{ track.name }}</div>
             <div class="song-duration">{{ track.duration }}</div>
@@ -23,9 +15,7 @@
         </li>
       </ul>
     </div>
-    <button @click="deleteAlbum" class="delete-album-button">
-      Удалить альбом
-    </button>
+    <button @click="deleteAlbum" class="delete-album-button">Удалить альбом</button>
   </div>
 </template>
 
@@ -43,12 +33,9 @@ const emit = defineEmits(["selectTrack", "goToAlbumChoosing", "deleteAlbum"]);
 const deleteAlbum = async () => {
   if (window.confirm("Вы уверены, что хотите удалить этот альбом?")) {
     try {
-      const response = await fetch(
-        `${backendAddress}/collection/album/${props.album.id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${backendAddress}/collection/album/${props.album.id}`, {
+        method: "DELETE",
+      });
       if (response.ok) {
         emit("deleteAlbum");
       } else {

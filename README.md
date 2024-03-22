@@ -4,7 +4,6 @@
     <img src="./imgs/screen_1.png">
 </div>
 
-
 <div style="text-align: center">
     <img src="./imgs/screen_2.png">
 </div>
@@ -37,12 +36,11 @@ cd accompanist
 cp .env.sample .env
 ```
 
-
 Since this project uses Genius API for obtaining lyrics for tracks, you need to
 get token for Genius API. In can be done in 90 seconds:
 
 Go to [https://genius.com/api-clients](https://genius.com/api-clients) and
-obtain *Client Access Token*. You can enter any app name an use any "App Website
+obtain _Client Access Token_. You can enter any app name an use any "App Website
 URL". After you get the token, place it into your `.env` file (corresponding
 variable is `GENIUS_CLIENT_ACCESS_TOKEN`).
 
@@ -61,7 +59,7 @@ This project uses `ruff` for formatting and linting. For VS Code, just install
 the "Ruff" extension and reload the editor.
 
 If you're using VS Code, install these extensions for frontend development: "Vue
-- Official" and "Prettier".
+Official" and "Prettier".
 
 The `.vscode/launch.json` file is included in this repo to help developers to
 easily run the frontend and backend locally. To run the system locally, you need
@@ -80,7 +78,6 @@ docker compose up -d nginx db rabbitmq
 cd frontend
 nvm install 20
 nvm use 20
-npm install -g @vue/cli
 npm install
 # run "Vue.js" configuration in VS code or:
 npm run serve

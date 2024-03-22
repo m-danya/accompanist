@@ -13,6 +13,9 @@
             ],
             "cwd": "${workspaceFolder}/frontend",
             "console": "integratedTerminal",
+            "env": {
+                "DEPLOYMENT_HOST": "127.0.0.1"
+            },
         },
         {
             "name": "FastAPI",
@@ -22,7 +25,10 @@
             "args": [
                 "accompanist.main:app",
                 "--reload"
-            ]
+            ],
+            "env": {
+                "DEPLOYMENT_HOST": "127.0.0.1"
+            },
         },
         {
             "name": "Celery worker",

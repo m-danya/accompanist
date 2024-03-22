@@ -25,7 +25,11 @@ def get_lyrics_from_genius(artist_name: str, song_name: str):
     # `lyricsgenius` parser makes some mistakes => fix them (maybe one day it
     #  will be fixed)
     first_newline = lyrics.find("\n")
-    lyrics = lyrics[first_newline + 1 :]
+    if lyrics[first_newline + 1] == "\n":
+        from_idx = first_newline + 2
+    else:
+        from_idx = first_newline + 1
+    lyrics = lyrics[from_idx:]
     if lyrics.endswith("Embed"):
         lyrics = lyrics[: -len("Embed")]
     lyrics = lyrics.replace("You might also like", "\n")
