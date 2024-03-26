@@ -59,3 +59,12 @@ class TrackDAO(BaseDAO):
             track = result.scalars().one_or_none()
             track.lyrics_karaoke = lyrics_karaoke
             await session.commit()
+
+    @classmethod
+    async def update_favorite_by_id(cls, track_id: int, is_favorite: bool):
+        async with async_session_maker() as session:
+            query = select(Track).filter_by(id=track_id).with_for_update()
+            result = await session.execute(query)
+            track = result.scalars().one_or_none()
+            track.is_favorite = is_favorite
+            await session.commit()

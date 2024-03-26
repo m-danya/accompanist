@@ -7,3 +7,7 @@ class AlbumInfoFromUser(BaseModel):
 
 class LyricsKaraokeFromUser(BaseModel):
     lyrics_karaoke: list[dict]
+
+
+class IsFavoriteFromUser(BaseModel):
+    is_favorite: bool

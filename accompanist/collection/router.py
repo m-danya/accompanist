@@ -3,14 +3,18 @@ from loguru import logger
 
 from accompanist.collection import service
 from accompanist.collection.dao import AlbumDAO, TrackDAO
-from accompanist.collection.schema import AlbumInfoFromUser, LyricsKaraokeFromUser
+from accompanist.collection.schema import (
+    AlbumInfoFromUser,
+    IsFavoriteFromUser,
+    LyricsKaraokeFromUser,
+)
 
 router = APIRouter(
     prefix="/collection",
     tags=["User's music collection"],
 )
 
-# TODO: refactor endpoint paths (unify)
+# TODO [!!!]: refactor endpoint paths (unify)
 
 
 @router.post("/album", status_code=status.HTTP_202_ACCEPTED)
@@ -38,6 +42,12 @@ async def update_track_lyrics(track_id: int):
 @router.post("/update_lyrics_karaoke/{track_id}")
 async def update_track_lyrics_karaoke(track_id: int, data: LyricsKaraokeFromUser):
     await TrackDAO.update_lyrics_karaoke_by_id(track_id, data.lyrics_karaoke)
+    return data
+
+
+@router.post("/update_favorite/{track_id}")
+async def update_track_favorite(track_id: int, data: IsFavoriteFromUser):
+    await TrackDAO.update_favorite_by_id(track_id, data.is_favorite)
     return data
 
 

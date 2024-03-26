@@ -9,6 +9,12 @@
       () => {
         if (audioRef) {
           props.timeupdate(audioRef.currentTime);
+          if (props.autocontinue) {
+            // TODO: replace with something better (like `onFinish`)
+            if (audioRef.duration - audioRef.currentTime < 0.5) {
+              $emit('finishAudio');
+            }
+          }
         }
       }
     "
@@ -16,12 +22,14 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, ref, defineEmits } from "vue";
 const props = defineProps({
   src: String,
   autoplay: Boolean,
+  autocontinue: Boolean,
   timeupdate: { type: Function, required: false, default: () => {} },
 });
+const emit = defineEmits(["finishAudio"]);
 
 const audioRef = ref(null);
 

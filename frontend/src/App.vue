@@ -16,6 +16,7 @@
         @goToAlbumChoosing="handleGoToAlbumChoosing"
         @selectTrack="handleSelectTrack"
         @deleteAlbum="handleDeleteAlbum"
+        @refreshAlbums="fetchAlbums"
       />
       <AlbumListComponent
         :albums="albums"
@@ -53,6 +54,8 @@ provide("backendAddress", backendAddress);
 const getStaticUrl = (filename) => {
   return `${backendAddress}/static/${filename}`;
 };
+
+// TODO: wrap with `useLocalStorage` from useVue
 const userSettings = reactive({
   isAutoplayEnabled: false,
 });

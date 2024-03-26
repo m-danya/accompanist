@@ -114,6 +114,7 @@ the system at `${DEPLOYMENT_HOST}:${DOCKER_FRONTEND_PORT}`.
 #### Possible todos
 
 - [All the "TODO"s in the code]
+- Refactor endpoints
 - Showing lyrics (as in karaoke): API vs self-labeling
 - Collection management: order of albums / stars / rating
 - Add editing text from frontend (to edit Genius parser's mistakes)
