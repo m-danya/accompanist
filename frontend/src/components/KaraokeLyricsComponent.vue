@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, onMounted, inject } from "vue";
+import { ref, defineProps, inject, computed } from "vue";
 import AudioComponent from "./AudioComponent.vue";
 
 const props = defineProps({
@@ -20,39 +20,47 @@ const props = defineProps({
 });
 
 const currentLineIndex = ref(0);
-const currentLineText = ref("");
-const nextLineText = ref("");
-const getStaticUrl = inject("getStaticUrl");
-
-// TODO: rewrite these two functions
-
-const updateCurrentLine = (currentTime) => {
-  let foundIndex = null;
-  props.track.lyrics_karaoke.forEach((item, index) => {
-    if (currentTime <= item.end_ts) {
-      if (foundIndex === null) {
-        foundIndex = index;
-      }
-    }
-  });
-
-  if (foundIndex !== null && foundIndex !== currentLineIndex.value) {
-    currentLineIndex.value = foundIndex;
-    currentLineText.value = props.track.lyrics_karaoke[foundIndex].line;
-    const nextLine = props.track.lyrics_karaoke[foundIndex + 1];
-    nextLineText.value = nextLine ? nextLine.line : "";
-  }
-};
-
-onMounted(() => {
-  if (props.track.lyrics_karaoke && props.track.lyrics_karaoke.length) {
-    currentLineText.value = props.track.lyrics_karaoke[0].line;
-    nextLineText.value =
-      props.track.lyrics_karaoke.length > 1
-        ? props.track.lyrics_karaoke[1].line
-        : "";
+const linesNumber = computed(() => props.track.lyrics_karaoke.length);
+const currentLineText = computed(
+  () => props.track.lyrics_karaoke[currentLineIndex.value].line
+);
+const nextLineText = computed(() => {
+  if (currentLineIndex.value + 1 >= linesNumber.value) {
+    return "";
+  } else {
+    return props.track.lyrics_karaoke[currentLineIndex.value + 1].line;
   }
 });
+const getStaticUrl = inject("getStaticUrl");
+
+const updateCurrentLine = (currentTime) => {
+  // sustainable for track rewinding
+
+  let low = 0;
+  let high = linesNumber.value - 1;
+  let mid;
+  if (currentTime < props.track.lyrics_karaoke[0].end_ts) {
+    currentLineIndex.value = 0;
+    return;
+  }
+  if (currentTime >= props.track.lyrics_karaoke[high].end_ts) {
+    currentLineIndex.value = high;
+    return;
+  }
+  while (low <= high) {
+    mid = Math.floor((low + high) / 2);
+    const midValEndTs = props.track.lyrics_karaoke[mid].end_ts;
+    if (midValEndTs === currentTime) {
+      currentLineIndex.value = mid;
+      return;
+    } else if (midValEndTs < currentTime) {
+      low = mid + 1;
+    } else {
+      high = mid - 1;
+    }
+  }
+  currentLineIndex.value = Math.max(0, low);
+};
 </script>
 
 <style scoped>
