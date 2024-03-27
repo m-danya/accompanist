@@ -14,27 +14,6 @@
         <SpinnerComponent size="70px" />
       </div>
       <div v-else>
-        <AudioComponent
-          :src="getStaticUrl(track.filename_instrumental)"
-          :autoplay="userSettings.isAutoplayEnabled"
-          :autocontinue="userSettings.isAutoplayEnabled"
-          @finishAudio="
-            () => {
-              if (!isLastTrack) {
-                $emit('goToTrackByNumberInAlbum', track.number_in_album + 1);
-              }
-            }
-          "
-        />
-        <AudioComponent
-          :src="getStaticUrl(track.filename_vocals)"
-          :autoplay="false"
-        />
-        <AudioComponent
-          :src="getStaticUrl(track.filename_original)"
-          :autoplay="false"
-        />
-
         <div class="switch-outer-container">
           <div class="switch-container">
             <input
@@ -92,6 +71,27 @@
           </div>
         </div>
         <div class="multiline-text" v-else>
+          <AudioComponent
+            :src="getStaticUrl(track.filename_instrumental)"
+            :autoplay="userSettings.isAutoplayEnabled"
+            :autocontinue="userSettings.isAutoplayEnabled"
+            @finishAudio="
+              () => {
+                if (!isLastTrack) {
+                  $emit('goToTrackByNumberInAlbum', track.number_in_album + 1);
+                }
+              }
+            "
+          />
+          <AudioComponent
+            :src="getStaticUrl(track.filename_vocals)"
+            :autoplay="false"
+          />
+          <AudioComponent
+            :src="getStaticUrl(track.filename_original)"
+            :autoplay="false"
+          />
+
           {{ track.lyrics }}
           <div class="updateLyricsButtonDiv">
             <div v-if="updateLyricsButtonIsLoading">

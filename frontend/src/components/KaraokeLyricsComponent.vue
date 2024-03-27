@@ -65,15 +65,25 @@ const updateCurrentLine = (currentTime) => {
 
 <style scoped>
 .karaoke-lyrics .lyrics {
+  position: relative;
   white-space: pre-wrap;
-  font-size: 20px;
+  font-size: 25px;
   margin-top: 20px;
+  line-height: 1.5;
+  padding: 15px; /* Добавлен внутренний отступ */
+  text-align: center; /* Выравнивание текста по центру */
+  background-color: #0093e9;
+  color: white;
+  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
 }
 
-.current-line {
+.current-line,
+.next-line {
+  width: 100%; /* Обеспечивает полную ширину для выравнивания текста */
   font-weight: bold;
 }
 
 .next-line {
+  font-weight: normal; /* Устанавливаем обычное начертание для следующей строки */
 }
 </style>

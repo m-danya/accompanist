@@ -5,7 +5,15 @@
     </div>
     <div class="form-container">
       <h1>Добавить альбом</h1>
-      <input v-model="searchQuery" placeholder="Исполнитель и название" />
+      <input
+        v-model="searchQuery"
+        placeholder="Исполнитель и название"
+        type="text"
+      />
+      <div class="checkbox-container">
+        <input type="checkbox" id="addMultipleFlag" v-model="addMultipleFlag" />
+        <label for="addMultipleFlag">Добавить несколько</label>
+      </div>
       <button @click="addSong">Добавить</button>
     </div>
   </div>
@@ -16,8 +24,9 @@ import { ref, inject, defineEmits } from "vue";
 
 const backendAddress = inject("backendAddress");
 const searchQuery = ref("");
+const addMultipleFlag = ref(false);
 
-const emit = defineEmits(["confirmUploadNewAlbum, goToAlbumChoosing"]);
+const emit = defineEmits(["confirmUploadNewAlbum", "goToAlbumChoosing"]);
 
 async function addSong() {
   try {
@@ -36,7 +45,9 @@ async function addSong() {
     const data = await response.json();
     console.log("Запрос на добавление альбома принят: " + JSON.stringify(data));
     searchQuery.value = "";
-    emit("confirmUploadNewAlbum");
+    if (!addMultipleFlag.value) {
+      emit("confirmUploadNewAlbum");
+    }
   } catch (error) {
     console.error(error);
     alert("Ошибка при добавлении альбома");
@@ -58,11 +69,22 @@ async function addSong() {
   width: 300px;
 }
 
-input {
+input[type="text"] {
   margin: 5px 0;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+input[type="checkbox"] {
+  margin-right: 7px;
+}
+
+label {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 button {
@@ -78,5 +100,11 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.checkbox-container {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
 }
 </style>

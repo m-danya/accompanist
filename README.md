@@ -121,6 +121,7 @@ the system at `${DEPLOYMENT_HOST}:${DOCKER_FRONTEND_PORT}`.
 - Add editing text from frontend (to edit Genius parser's mistakes)
 - Run `alembic upgrade head` at launching?
 - Publish docker image(s) to Docker Hub
+- Different gradient backgounds for different songs (random + choosing)
 - Frontend localization
 - Add Telegram bot wrapper for the backend
 - Add mypy (+ CI)
