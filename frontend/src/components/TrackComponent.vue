@@ -4,7 +4,11 @@
       ← <slot>Назад</slot>
     </div>
     <h2>{{ track.name }} by {{ album.artist.name }}</h2>
-    <img :src="getStaticUrl(album.cover_path)" alt="Обложка альбома" class="album-cover" />
+    <img
+      :src="getStaticUrl(album.cover_path)"
+      alt="Обложка альбома"
+      class="album-cover"
+    />
     <div class="songs-list">
       <div v-if="pageState === TrackPageStates.ShowSpinnerInsteadOfLyrics">
         <SpinnerComponent size="70px" />
@@ -22,7 +26,14 @@
             }
           "
         />
-        <AudioComponent :src="getStaticUrl(track.filename_vocals)" :autoplay="false" />
+        <AudioComponent
+          :src="getStaticUrl(track.filename_vocals)"
+          :autoplay="false"
+        />
+        <AudioComponent
+          :src="getStaticUrl(track.filename_original)"
+          :autoplay="false"
+        />
 
         <div class="switch-outer-container">
           <div class="switch-container">
@@ -33,7 +44,9 @@
               @change="handleToggleLyricsMode"
             />
             <label for="karaoke-switch" class="switch-label">
-              <span class="switch-label-text" v-if="switchIsInKaraokeMode">Режим караоке</span>
+              <span class="switch-label-text" v-if="switchIsInKaraokeMode"
+                >Режим караоке</span
+              >
               <span class="switch-label-text" v-else>Полный текст</span>
             </label>
           </div>
@@ -41,13 +54,17 @@
         <div class="navigation-buttons" v-if="!isSingle">
           <button
             v-if="!isFirstTrack"
-            @click="$emit('goToTrackByNumberInAlbum', track.number_in_album - 1)"
+            @click="
+              $emit('goToTrackByNumberInAlbum', track.number_in_album - 1)
+            "
           >
             Предыдущий трек
           </button>
           <button
             v-if="!isLastTrack"
-            @click="$emit('goToTrackByNumberInAlbum', track.number_in_album + 1)"
+            @click="
+              $emit('goToTrackByNumberInAlbum', track.number_in_album + 1)
+            "
           >
             Следующий трек
           </button>
@@ -68,7 +85,7 @@
               Записать
             </button> -->
             <RecordTimecodesComponent
-              :mp3Url="getStaticUrl(track.filename_vocals)"
+              :mp3Url="getStaticUrl(track.filename_original)"
               :lyricsText="track.lyrics"
               @sendRecordedKaraokeLyrics="handleUpdatedLyricsKaraoke"
             />
@@ -80,7 +97,9 @@
             <div v-if="updateLyricsButtonIsLoading">
               <SpinnerComponent size="20px" />
             </div>
-            <button v-else @click="updateLyrics" class="updateLyricsButton">Обновить текст</button>
+            <button v-else @click="updateLyrics" class="updateLyricsButton">
+              Обновить текст
+            </button>
           </div>
         </div>
       </div>
@@ -88,7 +107,15 @@
   </div>
 </template>
 <script setup>
-import { defineEmits, defineProps, inject, computed, ref, onMounted, watch } from "vue";
+import {
+  defineEmits,
+  defineProps,
+  inject,
+  computed,
+  ref,
+  onMounted,
+  watch,
+} from "vue";
 import SpinnerComponent from "./SpinnerComponent.vue";
 import KaraokeLyricsComponent from "./KaraokeLyricsComponent.vue";
 import RecordTimecodesComponent from "./RecordTimecodesComponent.vue";
@@ -155,17 +182,24 @@ const props = defineProps({
   album: Object,
 });
 
-const emit = defineEmits(["goToTrackChoosing", "goToTrackByNumberInAlbum", "refreshAlbums"]);
+const emit = defineEmits([
+  "goToTrackChoosing",
+  "goToTrackByNumberInAlbum",
+  "refreshAlbums",
+]);
 
 async function updateLyrics() {
   try {
     updateLyricsButtonIsLoading.value = true;
-    const response = await fetch(`${backendAddress}/collection/update_lyrics/${props.track.id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${backendAddress}/collection/update_lyrics/${props.track.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     emit("refreshAlbums");
     if (!response.ok) {
       throw new Error("Failed to update lyrics");
@@ -179,7 +213,9 @@ async function updateLyrics() {
 }
 
 const isFirstTrack = computed(() => props.track.number_in_album == 1);
-const isLastTrack = computed(() => props.track.number_in_album == props.album.tracks.length);
+const isLastTrack = computed(
+  () => props.track.number_in_album == props.album.tracks.length
+);
 const isSingle = computed(() => props.album.tracks.length == 1);
 
 function openLyricsPage() {

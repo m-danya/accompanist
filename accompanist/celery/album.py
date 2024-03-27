@@ -67,7 +67,7 @@ def process_album(search_query: str):
     logger.info(f"Added {album}")
 
     for i, track in enumerate(album_json["tracks"], start=1):
-        vocals_path, instrumental_path = process_track(track["videoId"])
+        vocals_path, instrumental_path, original_path = process_track(track["videoId"])
         track_name = track["title"]
         lyrics = None
         try:
@@ -82,6 +82,7 @@ def process_album(search_query: str):
             filename_instrumental=str(
                 instrumental_path.relative_to(settings.STORAGE_PATH)
             ),
+            filename_original=str(original_path.relative_to(settings.STORAGE_PATH)),
             number_in_album=i,
             duration=track["duration"],
             lyrics=lyrics,
@@ -90,7 +91,7 @@ def process_album(search_query: str):
         logger.info(f"Added {track}")
 
 
-def process_track(video_id: str) -> tuple[Path, Path]:
+def process_track(video_id: str) -> tuple[Path, Path, Path]:
     with tempfile.TemporaryDirectory() as tempdir_yt, tempfile.TemporaryDirectory() as tempdir_demucs:
         output_dir_yt = Path(tempdir_yt)
         output_dir_demucs = Path(tempdir_demucs)
@@ -101,6 +102,8 @@ def process_track(video_id: str) -> tuple[Path, Path]:
                 "yt-dlp",
                 "--rm-cache-dir",
                 "--extract-audio",
+                "--audio-format",
+                "mp3",
                 "--no-playlist",
                 "-o",
                 f"{output_dir_yt}/%(title)s.%(ext)s",
@@ -109,7 +112,7 @@ def process_track(video_id: str) -> tuple[Path, Path]:
             ]
         )
 
-        audiofile = next(output_dir_yt.iterdir())
+        original_tmp_path = next(output_dir_yt.iterdir())
         logger.info("Running demucs..")
         # 2. Run demucs and leave instrumental only
         subprocess.run(
@@ -117,7 +120,7 @@ def process_track(video_id: str) -> tuple[Path, Path]:
                 "demucs",
                 "--mp3",
                 "--two-stems=vocals",
-                str(audiofile),
+                str(original_tmp_path),
                 "-o",
                 str(output_dir_demucs),
             ],
@@ -129,9 +132,11 @@ def process_track(video_id: str) -> tuple[Path, Path]:
 
         vocals_path = get_path_in_storage("mp3")
         instrumental_path = get_path_in_storage("mp3")
+        original_path = get_path_in_storage("mp3")
 
         # (mp3 files are nested deep inside the output dir => call recursive glob)
         shutil.move(next(output_dir_demucs.rglob("vocals.mp3")), vocals_path)
         shutil.move(next(output_dir_demucs.rglob("no_vocals.mp3")), instrumental_path)
+        shutil.move(original_tmp_path, original_path)
 
-    return vocals_path, instrumental_path
+    return vocals_path, instrumental_path, original_path

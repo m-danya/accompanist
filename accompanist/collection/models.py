@@ -39,6 +39,7 @@ class Track(Base):
     added_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     filename_vocals: Mapped[str]
     filename_instrumental: Mapped[str]
+    filename_original: Mapped[str]
     number_in_album: Mapped[int]
     duration: Mapped[str]
     lyrics: Mapped[Optional[str]]
@@ -57,6 +58,7 @@ class Track(Base):
             "name": self.name,
             "filename_vocals": self.filename_vocals,
             "filename_instrumental": self.filename_instrumental,
+            "filename_original": self.filename_original,
             "number_in_album": self.number_in_album,
             "duration": self.duration,
             "lyrics": self.lyrics,
