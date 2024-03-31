@@ -6,10 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: docker-compose up
+    - name: Set up .env
+      run: cp .env.sample .env
+    - name: Run containers
       env:
         COMPOSE_INTERACTIVE_NO_CLI: 1
-      run: DOCKER_BUILDKIT=1 docker-compose up -d
+      run: DOCKER_BUILDKIT=1 docker-compose up -d backend
     - name: Check running containers
       run: docker-compose ps -a
     - name: Check logs
