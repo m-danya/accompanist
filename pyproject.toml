@@ -22,6 +22,7 @@ lyricsgenius = "^3.0.1"
 flower = "^2.0.1"
 sqladmin = "^0.16.1"
 pytest = "^8.1.1"
+pytest-asyncio = "^0.23.6"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.3.2"
@@ -32,3 +33,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
 extend-select = ["I"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
