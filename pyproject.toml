@@ -21,6 +21,7 @@ demucs = "^4.0.1"
 lyricsgenius = "^3.0.1"
 flower = "^2.0.1"
 sqladmin = "^0.16.1"
+pytest = "^8.1.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.3.2"
