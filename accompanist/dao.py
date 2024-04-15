@@ -3,10 +3,12 @@ from sqlalchemy import delete, insert, select
 from sqlalchemy.exc import SQLAlchemyError
 
 from accompanist.database import async_session_maker
+from accompanist.exceptions import NoEntityException
 
 
 class BaseDAO:
     model = None
+    not_found_exception = NoEntityException
 
     @classmethod
     async def find_one_or_none(cls, **filter_by):
@@ -45,5 +47,7 @@ class BaseDAO:
     async def delete(cls, **filter_by):
         async with async_session_maker() as session:
             query = delete(cls.model).filter_by(**filter_by)
-            await session.execute(query)
+            result = await session.execute(query)
             await session.commit()
+            if not result.rowcount:
+                raise cls.not_found_exception(**filter_by)

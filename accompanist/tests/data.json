@@ -1,0 +1,55 @@
+{
+  "tracks": [
+    {
+      "id": 702,
+      "name": "Меланхолия драйв",
+      "artist_id": 15,
+      "album_id": 57,
+      "added_at": "2024-03-28T04:11:17.677Z",
+      "filename_vocals": "5915a2ac011548d9bafccba067ec1ed0.mp3",
+      "filename_instrumental": "885e4c123d81493ba1eb0c18e69b499c.mp3",
+      "number_in_album": 5,
+      "duration": "3:35",
+      "lyrics": null,
+      "lyrics_karaoke": null,
+      "is_favorite": false,
+      "filename_original": "181a3120ec164970b380bf35e0028c44.mp3",
+      "genius_url": null
+    },
+    {
+      "id": 698,
+      "name": "На рейвах",
+      "artist_id": 15,
+      "album_id": 57,
+      "added_at": "2024-03-28T04:08:53.505Z",
+      "filename_vocals": "9abe37ba51a1417b814e6536eee7b306.mp3",
+      "filename_instrumental": "3b741983b7ec400388b4fb6dbf2a29a6.mp3",
+      "number_in_album": 1,
+      "duration": "2:59",
+      "lyrics": null,
+      "lyrics_karaoke": null,
+      "is_favorite": true,
+      "filename_original": "0a74bbb8579d406abd0d348ef20be622.mp3",
+      "genius_url": null
+    }
+  ],
+
+  "artists": [
+    {
+      "id": 15,
+      "name": "Мимо Вселенной",
+      "added_at": "2024-03-26T09:40:21.437Z"
+    }
+  ],
+
+  "albums": [
+    {
+      "id": 57,
+      "artist_id": 15,
+      "cover_path": "5cf168b74ebb4a479a633a8926689212.jpg",
+      "added_at": "2024-03-28T04:08:18.435Z",
+      "name": "Три сотни дней",
+      "source_info": "{\"title\": \"\\u0422\\u0440\\u0438 \\u0441\\u043e\\u0442\\u043d\\u0438 \\u0434\\u043d\\u0435\\u0439\", \"type\": \"\\u0410\\u043b\\u044c\\u0431\\u043e\\u043c\", \"thumbnails\": [{\"url\": \"https://lh3.googleusercontent.com/Iq-v0cNzb-tJuxJyfZ81_UwnBwIzBJWDwT5_rv9xrLfuzcLUs1BsxkN3AeAwVAlHZg1Jbkr5nybD2JMF=w60-h60-l90-rj\", \"width\": 60, \"height\": 60}, {\"url\": \"https://lh3.googleusercontent.com/Iq-v0cNzb-tJuxJyfZ81_UwnBwIzBJWDwT5_rv9xrLfuzcLUs1BsxkN3AeAwVAlHZg1Jbkr5nybD2JMF=w120-h120-l90-rj\", \"width\": 120, \"height\": 120}, {\"url\": \"https://lh3.googleusercontent.com/Iq-v0cNzb-tJuxJyfZ81_UwnBwIzBJWDwT5_rv9xrLfuzcLUs1BsxkN3AeAwVAlHZg1Jbkr5nybD2JMF=w226-h226-l90-rj\", \"width\": 226, \"height\": 226}, {\"url\": \"https://lh3.googleusercontent.com/Iq-v0cNzb-tJuxJyfZ81_UwnBwIzBJWDwT5_rv9xrLfuzcLUs1BsxkN3AeAwVAlHZg1Jbkr5nybD2JMF=w544-h544-l90-rj\", \"width\": 544, \"height\": 544}], \"isExplicit\": true, \"artists\": [{\"name\": \"\\u041c\\u0438\\u043c\\u043e \\u0412\\u0441\\u0435\\u043b\\u0435\\u043d\\u043d\\u043e\\u0439\", \"id\": \"UC76Tqk0onAMgZj7y1byREEw\"}], \"year\": \"2019\", \"trackCount\": 9, \"duration\": \"26 \\u043c\\u0438\\u043d\\u0443\\u0442\", \"audioPlaylistId\": \"OLAK5uy_llK6A2f73Aw7ZYCepmdWHRtQLhEmQ4Olw\", \"tracks\": [{\"videoId\": \"GvBCUmMkZhc\", \"title\": \"\\u041d\\u0430 \\u0440\\u0435\\u0439\\u0432\\u0430\\u0445\", \"artists\": [{\"name\": \"\\u041c\\u0438\\u043c\\u043e \\u0412\\u0441\\u0435\\u043b\\u0435\\u043d\\u043d\\u043e\\u0439\", \"id\": \"UC76Tqk0onAMgZj7y1byREEw\"}], \"album\": \"\\u0422\\u0440\\u0438 \\u0441\\u043e\\u0442\\u043d\\u0438 \\u0434\\u043d\\u0435\\u0439\", \"likeStatus\": \"INDIFFERENT\", \"inLibrary\": null, \"thumbnails\": null, \"isAvailable\": true, \"isExplicit\": false, \"videoType\": \"MUSIC_VIDEO_TYPE_ATV\", \"views\": \"106\\u00a0\\u0442\\u044b\\u0441. \\u043f\\u0440\\u043e\\u0441\\u043b\\u0443\\u0448\\u0438\\u0432\\u0430\\u043d\\u0438\\u0439\", \"trackNumber\": 1, \"duration\": \"2:59\", \"duration_seconds\": 179}, {\"videoId\": \"OEjyLJlq4Os\", \"title\": \"\\u041f\\u043e\\u0434\\u0432\\u0430\\u043b\", \"artists\": [{\"name\": \"\\u041c\\u0438\\u043c\\u043e \\u0412\\u0441\\u0435\\u043b\\u0435\\u043d\\u043d\\u043e\\u0439\", \"id\": \"UC76Tqk0onAMgZj7y1byREEw\"}], \"album\": \"\\u0422\\u0440\\u0438 \\u0441\\u043e\\u0442\\u043d\\u0438 \\u0434\\u043d\\u0435\\u0439\", \"likeStatus\": \"INDIFFERENT\", \"inLibrary\": null, \"thumbnails\": null, \"isAvailable\": true, \"isExplicit\": false, \"videoType\": \"MUSIC_VIDEO_TYPE_ATV\", \"views\": \"51\\u00a0\\u0442\\u044b\\u0441. \\u043f\\u0440\\u043e\\u0441\\u043b\\u0443\\u0448\\u0438\\u0432\\u0430\\u043d\\u0438\\u0439\", \"trackNumber\": 2, \"duration\": \"3:54\", \"duration_seconds\": 234}, {\"videoId\": \"kHs9vUbXaG8\", \"title\": \"\\u0422\\u0440\\u0438 \\u0441\\u043e\\u0442\\u043d\\u0438 \\u0434\\u043d\\u0435\\u0439\", \"artists\": [{\"name\": \"\\u041c\\u0438\\u043c\\u043e \\u0412\\u0441\\u0435\\u043b\\u0435\\u043d\\u043d\\u043e\\u0439\", \"id\": \"UC76Tqk0onAMgZj7y1byREEw\"}], \"album\": \"\\u0422\\u0440\\u0438 \\u0441\\u043e\\u0442\\u043d\\u0438 \\u0434\\u043d\\u0435\\u0439\", \"likeStatus\": \"INDIFFERENT\", \"inLibrary\": null, \"thumbnails\": null, \"isAvailable\": true, \"isExplicit\": false, \"videoType\": \"MUSIC_VIDEO_TYPE_ATV\", \"views\": \"84\\u00a0\\u0442\\u044b\\u0441. \\u043f\\u0440\\u043e\\u0441\\u043b\\u0443\\u0448\\u0438\\u0432\\u0430\\u043d\\u0438\\u0439\", \"trackNumber\": 3, \"duration\": \"3:14\", \"duration_seconds\": 194}, {\"videoId\": \"j-xSGzaLQc8\", \"title\": \"\\u041e\\u0442 \\u0442\\u043e\\u0441\\u043a\\u0438\", \"artists\": [{\"name\": \"\\u041c\\u0438\\u043c\\u043e \\u0412\\u0441\\u0435\\u043b\\u0435\\u043d\\u043d\\u043e\\u0439\", \"id\": \"UC76Tqk0onAMgZj7y1byREEw\"}], \"album\": \"\\u0422\\u0440\\u0438 \\u0441\\u043e\\u0442\\u043d\\u0438 \\u0434\\u043d\\u0435\\u0439\", \"likeStatus\": \"INDIFFERENT\", \"inLibrary\": null, \"thumbnails\": null, \"isAvailable\": true, \"isExplicit\": true, \"videoType\": \"MUSIC_VIDEO_TYPE_ATV\", \"views\": \"20\\u00a0\\u0442\\u044b\\u0441. \\u043f\\u0440\\u043e\\u0441\\u043b\\u0443\\u0448\\u0438\\u0432\\u0430\\u043d\\u0438\\u0439\", \"trackNumber\": 4, \"duration\": \"1:54\", \"duration_seconds\": 114}, {\"videoId\": \"8kTrzTZK4nc\", \"title\": \"\\u041c\\u0435\\u043b\\u0430\\u043d\\u0445\\u043e\\u043b\\u0438\\u044f \\u0434\\u0440\\u0430\\u0439\\u0432\", \"artists\": [{\"name\": \"\\u041c\\u0438\\u043c\\u043e \\u0412\\u0441\\u0435\\u043b\\u0435\\u043d\\u043d\\u043e\\u0439\", \"id\": \"UC76Tqk0onAMgZj7y1byREEw\"}], \"album\": \"\\u0422\\u0440\\u0438 \\u0441\\u043e\\u0442\\u043d\\u0438 \\u0434\\u043d\\u0435\\u0439\", \"likeStatus\": \"INDIFFERENT\", \"inLibrary\": null, \"thumbnails\": null, \"isAvailable\": true, \"isExplicit\": false, \"videoType\": \"MUSIC_VIDEO_TYPE_ATV\", \"views\": \"59\\u00a0\\u0442\\u044b\\u0441. \\u043f\\u0440\\u043e\\u0441\\u043b\\u0443\\u0448\\u0438\\u0432\\u0430\\u043d\\u0438\\u0439\", \"trackNumber\": 5, \"duration\": \"3:35\", \"duration_seconds\": 215}, {\"videoId\": \"2ZOO_V2UkGE\", \"title\": \"\\u0417\\u043d\\u0430\\u0435\\u0448\\u044c \\u043f\\u043e\\u0447\\u0435\\u043c\\u0443\", \"artists\": [{\"name\": \"\\u041c\\u0438\\u043c\\u043e \\u0412\\u0441\\u0435\\u043b\\u0435\\u043d\\u043d\\u043e\\u0439\", \"id\": \"UC76Tqk0onAMgZj7y1byREEw\"}], \"album\": \"\\u0422\\u0440\\u0438 \\u0441\\u043e\\u0442\\u043d\\u0438 \\u0434\\u043d\\u0435\\u0439\", \"likeStatus\": \"INDIFFERENT\", \"inLibrary\": null, \"thumbnails\": null, \"isAvailable\": true, \"isExplicit\": true, \"videoType\": \"MUSIC_VIDEO_TYPE_ATV\", \"views\": \"123\\u00a0\\u0442\\u044b\\u0441. \\u043f\\u0440\\u043e\\u0441\\u043b\\u0443\\u0448\\u0438\\u0432\\u0430\\u043d\\u0438\\u0439\", \"trackNumber\": 6, \"duration\": \"2:40\", \"duration_seconds\": 160}, {\"videoId\": \"HpdXbBPORYo\", \"title\": \"\\u0412\\u043e\\u0441\\u043f\\u043b\\u0430\\u043c\\u0435\\u043d\\u0438\\u043b\\u0430\\u0441\\u044c\", \"artists\": [{\"name\": \"\\u041c\\u0438\\u043c\\u043e \\u0412\\u0441\\u0435\\u043b\\u0435\\u043d\\u043d\\u043e\\u0439\", \"id\": \"UC76Tqk0onAMgZj7y1byREEw\"}], \"album\": \"\\u0422\\u0440\\u0438 \\u0441\\u043e\\u0442\\u043d\\u0438 \\u0434\\u043d\\u0435\\u0439\", \"likeStatus\": \"INDIFFERENT\", \"inLibrary\": null, \"thumbnails\": null, \"isAvailable\": true, \"isExplicit\": false, \"videoType\": \"MUSIC_VIDEO_TYPE_ATV\", \"views\": \"48\\u00a0\\u0442\\u044b\\u0441. \\u043f\\u0440\\u043e\\u0441\\u043b\\u0443\\u0448\\u0438\\u0432\\u0430\\u043d\\u0438\\u0439\", \"trackNumber\": 7, \"duration\": \"3:48\", \"duration_seconds\": 228}, {\"videoId\": \"QWwJYVgyHb0\", \"title\": \"\\u0423\\u044d\\u0439\\u043d\", \"artists\": [{\"name\": \"\\u041c\\u0438\\u043c\\u043e \\u0412\\u0441\\u0435\\u043b\\u0435\\u043d\\u043d\\u043e\\u0439\", \"id\": \"UC76Tqk0onAMgZj7y1byREEw\"}], \"album\": \"\\u0422\\u0440\\u0438 \\u0441\\u043e\\u0442\\u043d\\u0438 \\u0434\\u043d\\u0435\\u0439\", \"likeStatus\": \"INDIFFERENT\", \"inLibrary\": null, \"thumbnails\": null, \"isAvailable\": true, \"isExplicit\": false, \"videoType\": \"MUSIC_VIDEO_TYPE_ATV\", \"views\": \"37\\u00a0\\u0442\\u044b\\u0441. \\u043f\\u0440\\u043e\\u0441\\u043b\\u0443\\u0448\\u0438\\u0432\\u0430\\u043d\\u0438\\u0439\", \"trackNumber\": 8, \"duration\": \"1:31\", \"duration_seconds\": 91}, {\"videoId\": \"Oc_8Uk201Fw\", \"title\": \"\\u0412\\u0430\\u043d\\u0441\\u044b\", \"artists\": [{\"name\": \"\\u041c\\u0438\\u043c\\u043e \\u0412\\u0441\\u0435\\u043b\\u0435\\u043d\\u043d\\u043e\\u0439\", \"id\": \"UC76Tqk0onAMgZj7y1byREEw\"}], \"album\": \"\\u0422\\u0440\\u0438 \\u0441\\u043e\\u0442\\u043d\\u0438 \\u0434\\u043d\\u0435\\u0439\", \"likeStatus\": \"INDIFFERENT\", \"inLibrary\": null, \"thumbnails\": null, \"isAvailable\": true, \"isExplicit\": false, \"videoType\": \"MUSIC_VIDEO_TYPE_ATV\", \"views\": \"133\\u00a0\\u0442\\u044b\\u0441. \\u043f\\u0440\\u043e\\u0441\\u043b\\u0443\\u0448\\u0438\\u0432\\u0430\\u043d\\u0438\\u0439\", \"trackNumber\": 9, \"duration\": \"3:22\", \"duration_seconds\": 202}], \"duration_seconds\": 1617}"
+    }
+  ]
+}

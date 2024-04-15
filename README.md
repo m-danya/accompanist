@@ -131,6 +131,7 @@ the system at `${DEPLOYMENT_HOST}:${DOCKER_FRONTEND_PORT}`.
 - Put vocals track into "practice mode", mix with karaoke?
 - Add router to frontend (to support links like /album/123)
 - Show track name in page title
+- Shuffle mode (for karaoke-labeled tracks with autoplay)
 - Download tracks' studio versions (ignore clip versions from YT Music)
 - Collection management: order of albums / stars / rating
 - Add editing text from frontend (to edit Genius parser's mistakes)

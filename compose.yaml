@@ -92,6 +92,7 @@ services:
         retries: 5
     volumes:
         - postgres-volume:/var/lib/postgresql/data
+        - ./accompanist/tests/create_test_db.sql:/docker-entrypoint-initdb.d/create_test_db.sql
   rabbitmq:
     image: rabbitmq
     restart: always
