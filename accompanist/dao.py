@@ -3,12 +3,12 @@ from sqlalchemy import delete, insert, select
 from sqlalchemy.exc import SQLAlchemyError
 
 from accompanist.database import async_session_maker
-from accompanist.exceptions import NoEntityException
+from accompanist.exceptions import EntityNotFoundException
 
 
 class BaseDAO:
     model = None
-    not_found_exception = NoEntityException
+    not_found_exception = EntityNotFoundException
 
     @classmethod
     async def find_one_or_none(cls, **filter_by):

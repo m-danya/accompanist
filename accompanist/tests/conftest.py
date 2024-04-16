@@ -23,6 +23,8 @@ def test_data():
             for column in row:
                 if column.endswith("_at"):
                     row[column] = datetime.strptime(row[column], TEST_DATETIME_FORMAT)
+    test_data["albums"].sort(key=lambda x: x["id"])
+    test_data["tracks"].sort(key=lambda x: x["id"])
     # TODO: make this dict immutable to prevent accidental modification
     return test_data
 
@@ -30,6 +32,11 @@ def test_data():
 @pytest.fixture(scope="session")
 def test_album_data(test_data):
     return test_data["albums"]
+
+
+@pytest.fixture(scope="session")
+def test_track_data(test_data):
+    return test_data["tracks"]
 
 
 @pytest.fixture(scope="function", autouse=True)

@@ -13,7 +13,7 @@ class AccompanistException(HTTPException):
         )
 
 
-class NoEntityException(AccompanistException):
+class EntityNotFoundException(AccompanistException):
     status_code = status.HTTP_404_NOT_FOUND
     entity_name = "entity"
 
@@ -26,9 +26,9 @@ class NoEntityException(AccompanistException):
         return f"There is no {self.entity_name} with {self.filter_criteria}"
 
 
-class NoAlbumException(NoEntityException):
+class AlbumNotFoundException(EntityNotFoundException):
     entity_name = "album"
 
 
-class NoTrackException(NoEntityException):
+class TrackNotFoundException(EntityNotFoundException):
     entity_name = "track"

@@ -16,8 +16,6 @@ async def update_track_lyrics_by_id(track_id: int):
     lyrics, genius_url = await loop.run_in_executor(
         None, get_lyrics_from_genius, track.artist.name, track.name
     )
-    update_request = TrackUpdateRequest(
-        lyrics=lyrics, genius_url=genius_url
-    ).model_dump(exclude_unset=True)
+    update_request = TrackUpdateRequest(lyrics=lyrics, genius_url=genius_url)
     track = await TrackDAO.update(track.id, update_request)
     return track
