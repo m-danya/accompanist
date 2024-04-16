@@ -20,4 +20,5 @@ jobs:
       run: docker-compose exec -T backend pytest 2>&1 > pytest_log.txt
 
     - name: Show pytest output
+      if: always()
       run: cat pytest_log.txt
