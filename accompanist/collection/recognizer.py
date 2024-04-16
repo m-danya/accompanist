@@ -1,9 +1,8 @@
-import whisper
-import json
-import yaml
 from functools import lru_cache
-
 from typing import List
+
+import whisper
+import yaml
 
 
 class Timestamper:

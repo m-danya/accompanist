@@ -1,8 +1,7 @@
 from pathlib import Path
 from typing import Literal, Optional
 
-from pydantic_settings import BaseSettings, SettingsConfigDict, BaseModel:quit:q
-
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -47,11 +46,7 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-class Models_settins(BaseSettings)
-
 
 settings = Settings()
 
 settings.STORAGE_PATH.mkdir(exist_ok=True)
-
-
