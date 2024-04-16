@@ -5,13 +5,13 @@ Revises: 12a1d416b35e
 Create Date: 2024-03-17 20:16:28.957003
 
 """
+
 from typing import Sequence, Union
 
 
-
 # revision identifiers, used by Alembic.
-revision: str = '0017d75656ce'
-down_revision: Union[str, None] = '12a1d416b35e'
+revision: str = "0017d75656ce"
+down_revision: Union[str, None] = "12a1d416b35e"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
