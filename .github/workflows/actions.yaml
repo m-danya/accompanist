@@ -17,7 +17,7 @@ jobs:
       run: docker-compose ps -a
 
     - name: Test with pytest
-      run: docker-compose exec -T backend pytest 2>&1 > pytest_log.txt
+      run: docker-compose exec -T backend python -m pytest 2>&1 > pytest_log.txt
 
     - name: Show pytest output
       if: always()
