@@ -1,60 +1,116 @@
-from functools import lru_cache
 from pathlib import Path
 from typing import List
 
-import whisper
+import librosa
+import torch
+from transformers import (
+    WhisperForConditionalGeneration,
+    WhisperTokenizer,
+    WhisperProcessor,
+)
 
 
 class LyricsTimestamper:
-    MODEL_TYPE = "tiny"
-    DEVICE = "cuda"
+    MODEL_TYPE = "small"
 
     def __init__(self) -> None:
-        self.model = whisper.load_model(self.MODEL_TYPE).to(self.DEVICE)
+        # self.pipe = pipeline(
+        #     "automatic-speech-recognition",
+        #     model="openai/whisper-small",
+        #     chunk_length_s=30,
+        #     device_map="auto",
+        # )
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.model = WhisperForConditionalGeneration.from_pretrained(
+            "openai/whisper-small",
+        ).to(self.device)
+        self.processor = WhisperProcessor.from_pretrained("openai/whisper-small")
+        self.tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-small")
 
-    def _levenshtein_distance(self, s1: str, s2: str) -> int:
-        @lru_cache(maxsize=None)
-        def helper(i, j):
-            if min(i, j) == 0:
-                return max(i, j)
-            elif s1[i - 1] == s2[j - 1]:
-                return helper(i - 1, j - 1)
-            else:
-                return 1 + min(helper(i, j - 1), helper(i - 1, j), helper(i - 1, j - 1))
-
-        return helper(len(s1), len(s2))
-
-    def get_karaoke_lyrics(self, path_mp3: Path, lyrics: str) -> List[dict[str, str]]:
-        # TODO: standardize lyrics preprocessing
+    def get_karaoke_lyrics(self, vocals_mp3: Path, lyrics: str) -> List[dict[str, str]]:
+        # TODO: standardize lyrics preprocessing between frontend and backend
         lyrics_lines = [
             line.strip()
             for line in lyrics.split("\n")
             if line.strip() and not line.startswith("[")
         ]
 
-        transcript = self.model.transcribe(word_timestamps=True, audio=str(path_mp3))
+        # audio = whisper.load_audio(path_mp3)
+        # audio = whisper.pad_or_trim(audio)
 
-        lyrics_karaoke = []
-        segments = transcript["segments"]
-        prev_n = 0
-        for line in lyrics_lines:
-            last_word = line[-1]
-            curr_n = len(line)
-            curr_segments = segments[prev_n:curr_n]
+        # mel = whisper.log_mel_spectrogram(audio).to(self.model.device)
 
-            min_lev_wordend = None
-            min_lev_value = 1000000
-            for segment in curr_segments:
-                curr_word = segment["words"][0]["word"]
-                curr_end = segment["words"][0]["end"]
-                curr_lev_value = self._levenshtein_distance(curr_word, last_word)
-                if min_lev_value > curr_lev_value:
-                    min_lev_value = curr_lev_value
-                    min_lev_wordend = curr_end
+        # _, probs = self.model.detect_language(mel)
+        # options = whisper.DecodingOptions(language='ru')
+        sampling_rate = 16_000  # as Whisper requires?
+        waveform, _ = librosa.load(vocals_mp3, sr=sampling_rate, mono=True)
 
-            prev_n = curr_n
-            lyrics_karaoke.append({"line": line, "end_ts": min_lev_wordend})
+        # non_silent_intervals = librosa.effects.split(waveform, top_db=30)
 
-        # TODO: assert that lines are sorted by "end_ts"
-        print(lyrics_karaoke)
+        chunk_length_s = 5
+        overlap = chunk_length_s / 2  # 50% overlap
+        chunk_samples = int(chunk_length_s * sampling_rate)
+        overlap_samples = int(overlap * sampling_rate)
+
+        chunks = [
+            waveform[i : i + chunk_samples]
+            for i in range(
+                0, len(waveform) - chunk_samples, chunk_samples - overlap_samples
+            )
+        ]
+
+        transcribed_lines = []
+        for i, chunk in enumerate(chunks):
+            start_sample = i * (chunk_samples - overlap_samples)
+            end_sample = start_sample + len(chunk)
+
+            inputs = self.processor(
+                chunk, return_tensors="pt", sampling_rate=sampling_rate
+            ).input_features
+            inputs = inputs.to(self.device)
+
+            with torch.no_grad():
+                outputs = self.model.generate(inputs, language="ru")
+
+            transcribed_text = self.processor.decode(
+                outputs[0], skip_special_tokens=True
+            )
+
+            start_ts = start_sample / sampling_rate
+            end_ts = end_sample / sampling_rate
+
+            transcribed_lines.append(
+                {"text": transcribed_text, "start_ts": start_ts, "end_ts": end_ts}
+            )
+
+        # transcribed_lines = []
+        # for start_sample, end_sample in non_silent_intervals:
+        #     interval_audio = waveform[start_sample:end_sample]
+
+        # prediction = self.pipe(
+        #     audio_dict,
+        #     # as the pipeline does not support `language` kwarg and fails if
+        #     #  autodetection finds two different languages in one batch
+        #     batch_size=1,
+        #     return_timestamps=True,
+        # )["chunks"]
+
+        print(f"{lyrics_lines=}")
+        print(f"{transcribed_lines=}")
+        prompt = """
+        You're a deaf person at a local karaoke bar. Your job is to make timestamps
+        for karaoke songs. For each song you get `lyrics_lines` an array of ground
+        truth lines and`transcribed_lines`, which is an array of speech-to-text
+        model. You need to output a `lyrics_karaoke` list, each object of which is a
+        dict with keys "line" and "end_ts". In other words, you need to find an end
+        of every line in the text. 
+
+        `lyrics_karaoke` array must have exactly the same lines as `lyrics_lines` in
+        exactly the same order. Values of `end_ts` must increase from one element to
+        another, as they are lines of one song.
+
+        Do not write any code, just output the `lyrics_karaoke` dict in a JSON format.
+        Try your best. Here is your input:
+        """
+        lyrics_karaoke = "ChatGPT4(lyrics_lines, transcribed_lines, prompt)"
         return lyrics_karaoke

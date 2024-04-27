@@ -23,7 +23,7 @@ async def update_track_lyrics_by_id(track_id: int):
     return track
 
 
-# TODO: rename
+# TODO: rename and move to celery tasks
 async def update_lyrics_timestamps(track_id: int):
     track = await TrackDAO.get_with_artist(track_id)
     timestamper = LyricsTimestamper()
