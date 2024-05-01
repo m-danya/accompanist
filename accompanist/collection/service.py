@@ -2,7 +2,7 @@ import asyncio
 
 from accompanist.celery.tasks import process_album_task
 from accompanist.collection.dao import TrackDAO
-from accompanist.collection.recognizer import LyricsTimestamper
+from accompanist.collection.timestamper import LyricsTimestamper
 from accompanist.collection.schema import AlbumInfoFromUser, TrackUpdateRequest
 from accompanist.collection.service_genius import get_lyrics_from_genius
 from accompanist.config import settings

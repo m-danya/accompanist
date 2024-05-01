@@ -28,6 +28,10 @@ sudo apt-get install -y nvidia-container-toolkit
 sudo systemctl restart docker
 ```
 
+If you don't have a GPU, you'll need to comment
+[these](https://github.com/m-danya/accompanist/blob/2dd6a2b4e5a655a26f32ae536ae35a80ce0dbd9d/compose.yaml#L36C1-L42C36)
+lines in `compose.yaml`.
+
 How to run the system:
 
 ```
@@ -43,6 +47,8 @@ Go to [https://genius.com/api-clients](https://genius.com/api-clients) and
 obtain _Client Access Token_. You can enter any app name an use any "App Website
 URL". After you get the token, place it into your `.env` file (corresponding
 variable is `GENIUS_CLIENT_ACCESS_TOKEN`).
+
+You can set `OPENAI_API_KEY` or left this key unfilled.
 
 Let's continue:
 
@@ -119,6 +125,9 @@ the system at `${DEPLOYMENT_HOST}:${DOCKER_FRONTEND_PORT}`.
 #### Possible todos
 
 - [All the "TODO"s in the code]
+- Storage management: delete (or even manage) stored mp3s and jpgs
+- Finish timestamper (see #4)
+- Autofetch albums/tracks in components every N seconds at frontend?
 - DragAndDrop albums at the main page
 - Fix admin panel being available only at ${FASTAPI_PORT} but not at ${NGINX_PORT}
 - Tune Genius search query (e.g. remove the parentheses in track title)
@@ -138,6 +147,7 @@ the system at `${DEPLOYMENT_HOST}:${DOCKER_FRONTEND_PORT}`.
 - Run `alembic upgrade head` at launching?
 - Publish docker image(s) to Docker Hub
 - Different gradient backgounds for different songs (random + choosing)
+- Recognize notes?
 - Frontend localization
 - Add Telegram bot wrapper for the backend
 - Add mypy (+ CI)

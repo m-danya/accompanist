@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     STORAGE_PATH: Path
 
     GENIUS_CLIENT_ACCESS_TOKEN: Optional[str]
+    OPENAI_API_KEY: Optional[str]
 
     @property
     def DATABASE_URL(self):
