@@ -46,6 +46,7 @@ class Track(Base):
     lyrics_karaoke: Mapped[Optional[list[dict]]] = mapped_column(JSON)
     is_favorite: Mapped[bool] = mapped_column(default=False)
     genius_url: Mapped[Optional[str]]
+    notes: Mapped[Optional[str]]
 
     album: Mapped["Album"] = relationship(back_populates="tracks")
     artist: Mapped["Artist"] = relationship(back_populates="tracks")
@@ -66,6 +67,7 @@ class Track(Base):
             "lyrics_karaoke": self.lyrics_karaoke,
             "is_favorite": self.is_favorite,
             "genius_url": self.genius_url,
+            "notes": self.notes,
         }
 
     def to_json_for_album(self):

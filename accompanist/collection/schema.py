@@ -12,3 +12,4 @@ class TrackUpdateRequest(BaseModel):
     lyrics: Optional[str] = None
     lyrics_karaoke: Optional[list[dict]] = None
     genius_url: Optional[str] = None
+    notes: Optional[str] = None

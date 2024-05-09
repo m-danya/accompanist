@@ -41,7 +41,7 @@ async def get_track(track_id: int):
     track = await TrackDAO.find_one_or_none(id=track_id)
     if not track:
         raise TrackNotFoundException(id=track_id)
-    return track
+    return track.to_json()
 
 
 @router.patch("/track/{track_id}")

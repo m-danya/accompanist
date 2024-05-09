@@ -151,11 +151,21 @@
               Обновить текст
             </button>
           </div>
+          <div :style="{ display: 'flex' }">
+            <textarea
+              v-model="track.notes"
+              @input="handleUpdateNotes"
+              rows="5"
+              class="notes-input"
+              placeholder="Добавьте заметки о треке"
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script setup>
 import { defineEmits, defineProps, inject, computed, ref, watch } from "vue";
 import SpinnerComponent from "./SpinnerComponent.vue";
@@ -274,6 +284,27 @@ async function handleToggleIsFavorite() {
   }
 }
 
+async function handleUpdateNotes() {
+  try {
+    const response = await fetch(`${backendAddress}/track/${track.value.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        notes: track.value.notes,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to update notes");
+    }
+    track.value = await response.json();
+  } catch (error) {
+    console.error("Error updating notes:", error);
+    alert("Failed to update notes");
+  }
+}
+
 async function updateLyrics() {
   try {
     updateLyricsButtonIsLoading.value = true;
@@ -376,7 +407,6 @@ watch(
   display: block;
   margin-left: auto;
   margin-right: auto;
-  /* margin-bottom: 40px; */
   max-width: 300px;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -417,14 +447,14 @@ watch(
 .title-and-icons {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* This will place the title and icons at the start and end of the container */
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
 }
 
 .all-action-icons {
   display: flex;
-  gap: 10px; /* Расстояние между элементами */
+  gap: 10px;
 }
 
 .marged-spinner {
@@ -465,27 +495,25 @@ watch(
 
 .icon-sized {
   width: 24px;
-  /* Adjust icon size as needed */
   height: 24px;
-  /* Adjust icon size as needed */
 }
 
 .karaoke-button {
   cursor: pointer;
-  /* display: flex;
-  width: 24px;
-  height: 24px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background-color: black; */
 }
 
 .icon-sized-karaoke {
-  /* width: 11px;
-  height: 11px; */
-  /* color: white; */
   width: 24px;
   height: 24px;
+}
+
+.notes-input {
+  width: 100%;
+  padding: 10px 0 0 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  resize: vertical;
 }
 </style>
