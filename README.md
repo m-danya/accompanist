@@ -8,6 +8,11 @@
     <img src="./imgs/screen_2.png">
 </div>
 
+## THIS PROJECT IS NO LONGER MAINTAINED.
+## CHECK OUT ai-karaoke INSTEAD (accompanist 2.0):
+
+If you're looking for a newer and more capable version, check out [ai-karaoke](https://github.com/m-danya/ai-karaoke). It builds on the ideas from this project and adds automatic word-level timestamp alignment.
+
 ### How to run
 
 Prerequisites: Docker
