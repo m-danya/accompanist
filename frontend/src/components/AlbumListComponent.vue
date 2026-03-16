@@ -3,6 +3,9 @@
     <div class="album-list">
       <h2>Доступные альбомы</h2>
       <div class="albums-grid">
+        <div class="album-cover new-album" @click="$emit('uploadNewAlbum')">
+          <span class="plus-sign">+</span>
+        </div>
         <div
           class="album"
           v-for="album in albums"
@@ -16,9 +19,6 @@
           />
           <div class="album-title clickable">{{ album.name }}</div>
           <div class="album-artist clickable">{{ album.artist.name }}</div>
-        </div>
-        <div class="album-cover new-album" @click="$emit('uploadNewAlbum')">
-          <span class="plus-sign">+</span>
         </div>
       </div>
     </div>

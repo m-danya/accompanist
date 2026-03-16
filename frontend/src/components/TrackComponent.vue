@@ -99,6 +99,18 @@
           >
             Разметить караоке-текст
           </button>
+          <div class="updateAILyricsButtonDiv">
+            <div v-if="updateAIKaraokeLyricsButtonIsLoading">
+              <SpinnerComponent size="20px" />
+            </div>
+            <button
+              v-else
+              @click="updateAIKaraokeLyrics"
+              class="updateLyricsButton"
+            >
+              Разметить караоке-текст с помощью ИИ
+            </button>
+          </div>
           <div v-if="isKaraokeInRecordingMode">
             <RecordTimecodesComponent
               :mp3Url="getStaticUrl(track.filename_original)"
@@ -186,6 +198,7 @@ import { faFileLines } from "@fortawesome/free-regular-svg-icons";
 const backendAddress = inject("backendAddress");
 const getStaticUrl = inject("getStaticUrl");
 const updateLyricsButtonIsLoading = ref(false);
+const updateAIKaraokeLyricsButtonIsLoading = ref(false);
 const TrackPageStates = {
   ShowSpinnerInsteadOfLyrics: 0,
   ShowPlainLyrics: 1,
@@ -326,6 +339,31 @@ async function updateLyrics() {
     alert("Failed to update lyrics");
   } finally {
     updateLyricsButtonIsLoading.value = false;
+  }
+}
+
+async function updateAIKaraokeLyrics() {
+  try {
+    // TODO: rename variables
+    updateAIKaraokeLyricsButtonIsLoading.value = true;
+    const response = await fetch(
+      `${backendAddress}/tracks/${track.value.id}/lyrics_timestamps`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to update karaoke lyrics with AI");
+    }
+    track.value = await response.json();
+  } catch (error) {
+    console.error(error);
+    alert("Failed to update karaoke lyrics with AI");
+  } finally {
+    updateAIKaraokeLyricsButtonIsLoading.value = false;
   }
 }
 

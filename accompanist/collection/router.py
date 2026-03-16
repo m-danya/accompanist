@@ -56,6 +56,13 @@ async def update_track_lyrics(track_id: int):
     return track
 
 
+# TODO: rename
+@router.post("/tracks/{track_id}/lyrics_timestamps")
+async def update_track_lyrics_timestamps(track_id: int):
+    track = await service.update_lyrics_timestamps(track_id)
+    return track
+
+
 @router.post("/update_lyrics_dev", include_in_schema=False)
 async def update_all_tracks_lyrics():
     tracks = await TrackDAO.find_all()
